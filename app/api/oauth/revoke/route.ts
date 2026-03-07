@@ -1,6 +1,6 @@
 import { db } from "@/db";
 import { oauthToken } from "@/db/schema";
-import { hashToken, oauthError } from "@/lib/oauth";
+import { authenticateClient, hashToken, oauthError } from "@/lib/oauth";
 import { eq, or } from "drizzle-orm";
 import { NextRequest } from "next/server";
 
@@ -15,9 +15,26 @@ export async function POST(req: NextRequest) {
     return oauthError("invalid_request", "Missing required parameter: token");
   }
 
+  // RFC 7009 §2.1 — authenticate the client before revoking
+  const clientId = body.get("client_id") as string | null;
+  const clientSecret = body.get("client_secret") as string | null;
+
+  if (!clientId || !clientSecret) {
+    return oauthError(
+      "invalid_client",
+      "Missing required parameters: client_id, client_secret",
+      401
+    );
+  }
+
+  const app = await authenticateClient(clientId, clientSecret);
+  if (!app) {
+    return oauthError("invalid_client", "Invalid client credentials", 401);
+  }
+
   const tokenHash = hashToken(token);
 
-  // Try to match as access token or refresh token
+  // Try to match as access token or refresh token belonging to this client
   const [record] = await db
     .select({ id: oauthToken.id })
     .from(oauthToken)

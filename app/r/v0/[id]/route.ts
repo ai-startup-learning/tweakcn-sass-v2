@@ -1,16 +1,19 @@
 import { NextResponse } from "next/server";
-import { getTheme } from "@/actions/themes";
+import { db } from "@/db";
+import { communityTheme, theme as themeTable } from "@/db/schema";
 import { generateV0RegistryPayload } from "@/utils/registry/v0";
 import { getBuiltInThemeStyles } from "@/utils/theme-preset-helper";
+import { eq } from "drizzle-orm";
 
-export const dynamic = "force-static";
+export const dynamic = "force-dynamic";
 
 export async function GET(_req: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
+  const themeId = id.replace(/\.json$/, "");
 
   try {
-    // First, check if this is a built-in theme
-    const builtInTheme = getBuiltInThemeStyles(id.replace(/\.json$/, ""));
+    // Built-in themes are always public
+    const builtInTheme = getBuiltInThemeStyles(themeId);
     if (builtInTheme) {
       const payload = generateV0RegistryPayload(builtInTheme.name, builtInTheme.styles);
       return new NextResponse(JSON.stringify(payload), {
@@ -22,10 +25,26 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
       });
     }
 
-    // Fall back to database lookup for user-saved themes
-    const theme = await getTheme(id);
-    const payload = generateV0RegistryPayload(theme.name, theme.styles);
+    // Only serve user themes that have been published to the community.
+    // Private themes must not be exposed via the public registry URL.
+    const [row] = await db
+      .select({
+        name: themeTable.name,
+        styles: themeTable.styles,
+      })
+      .from(communityTheme)
+      .innerJoin(themeTable, eq(communityTheme.themeId, themeTable.id))
+      .where(eq(communityTheme.themeId, themeId))
+      .limit(1);
 
+    if (!row) {
+      return new NextResponse("Theme not found", {
+        status: 404,
+        headers: { "Content-Type": "application/json" },
+      });
+    }
+
+    const payload = generateV0RegistryPayload(row.name, row.styles);
     return new NextResponse(JSON.stringify(payload), {
       status: 200,
       headers: {
@@ -35,16 +54,9 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
     });
   } catch (error) {
     console.error("Error generating v0 registry payload:", error);
-
-    const isNotFound =
-      error instanceof Error &&
-      (error.name === "ThemeNotFoundError" || error.message.includes("not found"));
-
-    return new NextResponse(isNotFound ? "Theme not found" : "Failed to generate v0 payload", {
-      status: isNotFound ? 404 : 500,
-      headers: {
-        "Content-Type": "application/json",
-      },
+    return new NextResponse("Failed to generate v0 payload", {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
     });
   }
 }

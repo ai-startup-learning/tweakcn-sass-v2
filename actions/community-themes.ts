@@ -10,7 +10,6 @@ import {
   user as userTable,
 } from "@/db/schema";
 import { eq, and, desc, asc, sql, count, inArray } from "drizzle-orm";
-import cuid from "cuid";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import {
@@ -339,7 +338,7 @@ export async function publishTheme(
       }
     }
 
-    const id = cuid();
+    const id = crypto.randomUUID();
     await db.insert(communityTheme).values({
       id,
       themeId,
@@ -418,49 +417,17 @@ export async function toggleLikeTheme(
       throw new ValidationError("Community theme ID required");
     }
 
-    // Check if already liked
-    const [existingLike] = await db
-      .select()
-      .from(themeLike)
-      .where(
-        and(
-          eq(themeLike.userId, userId),
-          eq(themeLike.themeId, communityThemeId)
-        )
-      )
-      .limit(1);
+    // Use INSERT ON CONFLICT DO NOTHING as the atomic decision point.
+    // The PK constraint on (userId, themeId) ensures only one concurrent
+    // insert wins — eliminating the check-then-act race condition.
+    const [inserted] = await db
+      .insert(themeLike)
+      .values({ userId, themeId: communityThemeId, createdAt: new Date() })
+      .onConflictDoNothing()
+      .returning();
 
-    if (existingLike) {
-      // Unlike: delete + decrement
-      await db
-        .delete(themeLike)
-        .where(
-          and(
-            eq(themeLike.userId, userId),
-            eq(themeLike.themeId, communityThemeId)
-          )
-        );
-      const [updated] = await db
-        .update(communityTheme)
-        .set({
-          likeCount: sql`GREATEST(${communityTheme.likeCount} - 1, 0)`,
-        })
-        .where(eq(communityTheme.id, communityThemeId))
-        .returning({ likeCount: communityTheme.likeCount });
-
-      revalidateTag("community-themes");
-
-      return actionSuccess({
-        liked: false,
-        likeCount: updated.likeCount,
-      });
-    } else {
-      // Like: insert + increment
-      await db.insert(themeLike).values({
-        userId,
-        themeId: communityThemeId,
-        createdAt: new Date(),
-      });
+    if (inserted) {
+      // New like inserted → increment count
       const [updated] = await db
         .update(communityTheme)
         .set({ likeCount: sql`${communityTheme.likeCount} + 1` })
@@ -468,11 +435,38 @@ export async function toggleLikeTheme(
         .returning({ likeCount: communityTheme.likeCount });
 
       revalidateTag("community-themes");
+      return actionSuccess({ liked: true, likeCount: updated.likeCount });
+    } else {
+      // Conflict — already liked → unlike: delete + decrement
+      const [deleted] = await db
+        .delete(themeLike)
+        .where(
+          and(
+            eq(themeLike.userId, userId),
+            eq(themeLike.themeId, communityThemeId)
+          )
+        )
+        .returning();
 
-      return actionSuccess({
-        liked: true,
-        likeCount: updated.likeCount,
-      });
+      if (deleted) {
+        const [updated] = await db
+          .update(communityTheme)
+          .set({ likeCount: sql`GREATEST(${communityTheme.likeCount} - 1, 0)` })
+          .where(eq(communityTheme.id, communityThemeId))
+          .returning({ likeCount: communityTheme.likeCount });
+
+        revalidateTag("community-themes");
+        return actionSuccess({ liked: false, likeCount: updated.likeCount });
+      }
+
+      // Concurrent unlike already resolved — return current count
+      const [current] = await db
+        .select({ likeCount: communityTheme.likeCount })
+        .from(communityTheme)
+        .where(eq(communityTheme.id, communityThemeId));
+
+      revalidateTag("community-themes");
+      return actionSuccess({ liked: false, likeCount: current?.likeCount ?? 0 });
     }
   } catch (error) {
     logError(error as Error, {

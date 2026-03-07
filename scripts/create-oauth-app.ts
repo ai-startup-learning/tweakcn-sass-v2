@@ -14,7 +14,6 @@ import { drizzle } from "drizzle-orm/neon-http";
 import { oauthApp } from "../db/schema";
 import { generateSecureToken, hashSecret } from "../lib/oauth";
 import { randomBytes } from "crypto";
-import cuid from "cuid";
 import { config } from "dotenv";
 
 config({ path: ".env.local" });
@@ -61,7 +60,7 @@ async function main() {
   const now = new Date();
 
   await db.insert(oauthApp).values({
-    id: cuid(),
+    id: crypto.randomUUID(),
     name: args.name,
     description: args.description ?? null,
     clientId,

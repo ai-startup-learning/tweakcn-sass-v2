@@ -79,7 +79,7 @@ export const aiUsage = pgTable("ai_usage", {
   modelId: text("model_id").notNull(),
   promptTokens: text("prompt_tokens").notNull().default("0"),
   completionTokens: text("completion_tokens").notNull().default("0"),
-  daysSinceEpoch: text("days_since_epoch").notNull(),
+  daysSinceEpoch: integer("days_since_epoch").notNull(),
   createdAt: timestamp("created_at").notNull(),
 });
 
@@ -107,7 +107,9 @@ export const subscription = pgTable("subscription", {
   metadata: text("metadata"), // JSON string
   customFieldData: text("customFieldData"), // JSON string
   userId: text("userId").references(() => user.id),
-});
+},
+(table) => [index("subscription_user_id_idx").on(table.userId)]
+);
 
 // OAuth 2.0 tables
 

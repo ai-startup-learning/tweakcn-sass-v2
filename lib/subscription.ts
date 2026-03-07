@@ -27,9 +27,10 @@ export async function validateSubscriptionAndUsage(userId: string): Promise<Subs
       getMyAllTimeRequestCount(userId),
     ]);
 
+    // Use server-only env var — NEXT_PUBLIC_ vars are bundled into client JS
     const isSubscribed =
       !!activeSubscription &&
-      activeSubscription?.productId === process.env.NEXT_PUBLIC_TWEAKCN_PRO_PRODUCT_ID;
+      activeSubscription?.productId === process.env.TWEAKCN_PRO_PRODUCT_ID;
 
     if (isSubscribed) {
       return {

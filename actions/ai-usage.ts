@@ -4,7 +4,6 @@ import { db } from "@/db";
 import { aiUsage } from "@/db/schema";
 import { getCurrentUserId } from "@/lib/shared";
 import { ValidationError } from "@/types/errors";
-import cuid from "cuid";
 import { and, count, eq, gte } from "drizzle-orm";
 import { z } from "zod";
 
@@ -56,12 +55,12 @@ export async function recordAIUsage(input: {
     const [insertedUsage] = await db
       .insert(aiUsage)
       .values({
-        id: cuid(),
+        id: crypto.randomUUID(),
         userId,
         modelId,
         promptTokens: promptTokens.toString(),
         completionTokens: completionTokens.toString(),
-        daysSinceEpoch: daysSinceEpoch.toString(),
+        daysSinceEpoch,
         createdAt: new Date(),
       })
       .returning();
@@ -85,11 +84,10 @@ export async function getMyUsageStats(timeframe: Timeframe): Promise<UsageStats>
     const days = timeframe === "1d" ? 1 : timeframe === "7d" ? 7 : 30;
     const startDay = getDaysSinceEpoch(days);
 
-    // Get user's events in time range
     const events = await db
       .select()
       .from(aiUsage)
-      .where(and(eq(aiUsage.userId, userId), gte(aiUsage.daysSinceEpoch, startDay.toString())));
+      .where(and(eq(aiUsage.userId, userId), gte(aiUsage.daysSinceEpoch, startDay)));
 
     return {
       requests: events.length,
@@ -129,13 +127,11 @@ export async function getMyUsageChartData(timeframe: Timeframe): Promise<ChartDa
       const hours = 24;
       const startTime = Date.now() - hours * 60 * 60 * 1000;
 
-      // Get user's events in the last 24 hours
       const events = await db
         .select()
         .from(aiUsage)
         .where(and(eq(aiUsage.userId, userId), gte(aiUsage.createdAt, new Date(startTime))));
 
-      // Group by hour
       const chartData: ChartDataPoint[] = [];
       for (let i = hours - 1; i >= 0; i--) {
         const hourStart = Date.now() - i * 60 * 60 * 1000;
@@ -144,12 +140,10 @@ export async function getMyUsageChartData(timeframe: Timeframe): Promise<ChartDa
           (e) => e.createdAt.getTime() >= hourStart && e.createdAt.getTime() < hourEnd
         );
 
-        const totalRequests = hourEvents.length;
-
         chartData.push({
           hoursSinceEpoch: Math.floor(hourStart / (60 * 60 * 1000)),
           date: new Date(hourStart).toISOString(),
-          totalRequests,
+          totalRequests: hourEvents.length,
         });
       }
 
@@ -160,24 +154,20 @@ export async function getMyUsageChartData(timeframe: Timeframe): Promise<ChartDa
     const days = timeframe === "7d" ? 7 : 30;
     const startDay = getDaysSinceEpoch(days);
 
-    // Get user's events in time range
     const events = await db
       .select()
       .from(aiUsage)
-      .where(and(eq(aiUsage.userId, userId), gte(aiUsage.daysSinceEpoch, startDay.toString())));
+      .where(and(eq(aiUsage.userId, userId), gte(aiUsage.daysSinceEpoch, startDay)));
 
-    // Group by day
     const chartData: ChartDataPoint[] = [];
     for (let i = days - 1; i >= 0; i--) {
       const daysSince = getDaysSinceEpoch(i);
-      const dayEvents = events.filter((e) => parseInt(e.daysSinceEpoch) === daysSince);
-
-      const totalRequests = dayEvents.length;
+      const dayEvents = events.filter((e) => e.daysSinceEpoch === daysSince);
 
       chartData.push({
         daysSinceEpoch: daysSince,
         date: new Date(daysSince * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
-        totalRequests,
+        totalRequests: dayEvents.length,
       });
     }
 
@@ -210,7 +200,6 @@ export async function getDetailedUsageStats(
     const days = timeframe === "1d" ? 1 : timeframe === "7d" ? 7 : 30;
     const startDay = getDaysSinceEpoch(days);
 
-    // Get user's events for the model
     const events = await db
       .select()
       .from(aiUsage)
@@ -218,7 +207,7 @@ export async function getDetailedUsageStats(
         and(
           eq(aiUsage.userId, userId),
           eq(aiUsage.modelId, modelId),
-          gte(aiUsage.daysSinceEpoch, startDay.toString())
+          gte(aiUsage.daysSinceEpoch, startDay)
         )
       );
 

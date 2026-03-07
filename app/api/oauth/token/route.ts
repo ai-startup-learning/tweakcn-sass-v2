@@ -11,6 +11,15 @@ import { eq, and, isNull } from "drizzle-orm";
 import { NextRequest } from "next/server";
 
 export async function POST(req: NextRequest) {
+  // RFC 6749 §4.1.3 — token endpoint requires form-encoded body
+  const contentType = req.headers.get("content-type") ?? "";
+  if (!contentType.includes("application/x-www-form-urlencoded")) {
+    return oauthError(
+      "invalid_request",
+      "Content-Type must be application/x-www-form-urlencoded"
+    );
+  }
+
   const body = await req.formData().catch(() => null);
   if (!body) {
     return oauthError("invalid_request", "Request body must be form-encoded");

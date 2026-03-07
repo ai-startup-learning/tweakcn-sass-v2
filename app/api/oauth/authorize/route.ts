@@ -11,7 +11,6 @@ import {
 import { auth } from "@/lib/auth";
 import { eq, and } from "drizzle-orm";
 import { headers } from "next/headers";
-import cuid from "cuid";
 import { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -78,7 +77,7 @@ export async function GET(req: NextRequest) {
   const now = new Date();
 
   await db.insert(oauthAuthorizationCode).values({
-    id: cuid(),
+    id: crypto.randomUUID(),
     code,
     appId: app.id,
     userId: session.user.id,

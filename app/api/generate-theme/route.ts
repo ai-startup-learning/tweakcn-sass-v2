@@ -11,7 +11,6 @@ import { convertMessagesToModelMessages } from "@/utils/ai/message-converter";
 import { Ratelimit } from "@upstash/ratelimit";
 import { kv } from "@vercel/kv";
 import { createUIMessageStream, createUIMessageStreamResponse, stepCountIs, streamText } from "ai";
-import { headers } from "next/headers";
 import { NextRequest } from "next/server";
 
 const ratelimit = new Ratelimit({
@@ -22,11 +21,11 @@ const ratelimit = new Ratelimit({
 export async function POST(req: NextRequest) {
   try {
     const userId = await getCurrentUserId(req);
-    const headersList = await headers();
 
     if (process.env.NODE_ENV !== "development") {
-      const ip = headersList.get("x-forwarded-for") ?? "anonymous";
-      const { success, limit, reset, remaining } = await ratelimit.limit(ip);
+      // Rate-limit by userId — X-Forwarded-For is client-controlled and spoofable
+      const rateLimitKey = userId ?? "anonymous";
+      const { success, limit, reset, remaining } = await ratelimit.limit(rateLimitKey);
 
       if (!success) {
         return new Response("Rate limit exceeded. Please try again later.", {

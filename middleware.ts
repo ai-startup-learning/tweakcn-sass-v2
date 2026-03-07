@@ -4,6 +4,14 @@ import { NextResponse, type NextRequest } from "next/server";
 
 import { API_AUTH_PREFIX, DEFAULT_LOGIN_REDIRECT } from "./routes";
 
+// API routes that require authentication (session-based, not Bearer token)
+// Bearer-token routes (/api/v1/*, /api/oauth/*) handle their own auth
+const PROTECTED_API_ROUTES = [
+  "/api/generate-theme",
+  "/api/enhance-prompt",
+  "/api/subscription",
+];
+
 export async function middleware(request: NextRequest) {
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -11,12 +19,21 @@ export async function middleware(request: NextRequest) {
 
   const pathname = request.nextUrl.pathname;
 
-  const isApiAuth = pathname.startsWith(API_AUTH_PREFIX);
-
-  if (isApiAuth) {
+  // Always allow the auth API through
+  if (pathname.startsWith(API_AUTH_PREFIX)) {
     return NextResponse.next();
   }
 
+  // Safety net for protected API routes — return 401 if no session
+  // (individual routes also check, but this catches any future routes that forget)
+  if (PROTECTED_API_ROUTES.some((route) => pathname.startsWith(route))) {
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    return NextResponse.next();
+  }
+
+  // Protected page routes
   if (!session) {
     return NextResponse.redirect(new URL(DEFAULT_LOGIN_REDIRECT, request.url));
   }
@@ -32,5 +49,13 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/editor/theme/:themeId", "/dashboard", "/settings/:path*", "/success"],
+  matcher: [
+    "/editor/theme/:themeId",
+    "/dashboard",
+    "/settings/:path*",
+    "/success",
+    "/api/generate-theme",
+    "/api/enhance-prompt",
+    "/api/subscription",
+  ],
 };

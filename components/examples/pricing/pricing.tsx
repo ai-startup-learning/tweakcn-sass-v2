@@ -123,7 +123,7 @@ const Pricing2 = ({
                 </CardContent>
                 <CardFooter className="mt-auto">
                   <Button asChild className="w-full">
-                    <a href={plan.button.url} target="_blank">
+                    <a href={plan.button.url} target="_blank" rel="noreferrer">
                       {plan.button.text}
                       <ArrowRight className="ml-2 size-4" />
                     </a>

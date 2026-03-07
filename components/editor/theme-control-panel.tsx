@@ -342,6 +342,7 @@ const ThemeControlPanel = ({ styles, currentMode, onChange }: ThemeControlPanelP
                     <a
                       href="https://tailwindcss.com/docs/font-family"
                       target="_blank"
+                      rel="noreferrer"
                       className="hover:text-muted-foreground/90 underline underline-offset-2"
                     >
                       Tailwind docs

@@ -82,7 +82,7 @@ export function MessageActions({
       <DebugButton
         className="size-7 [&>svg]:size-3.5"
         onClick={() => {
-          console.log("----- 🐛 Debugging Message -----");
+          // Dev-only: inspect message object in browser console
           console.dir(message, { depth: null });
         }}
       />

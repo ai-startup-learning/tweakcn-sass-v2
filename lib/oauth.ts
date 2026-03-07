@@ -7,7 +7,6 @@ import {
 import { eq, and, isNull } from "drizzle-orm";
 import { randomBytes, createHash } from "crypto";
 import bcrypt from "bcryptjs";
-import cuid from "cuid";
 import { NextRequest } from "next/server";
 
 // --- Token generation & hashing ---
@@ -70,9 +69,7 @@ export function verifyCodeChallenge(
       .digest("base64url");
     return hash === codeChallenge;
   }
-  if (method === "plain") {
-    return codeVerifier === codeChallenge;
-  }
+  // RFC 7636: only S256 is accepted. 'plain' is insecure and not supported.
   return false;
 }
 
@@ -95,7 +92,7 @@ export async function createTokenPair(
   );
 
   await db.insert(oauthToken).values({
-    id: cuid(),
+    id: crypto.randomUUID(),
     accessTokenHash: hashToken(accessToken),
     refreshTokenHash: hashToken(refreshToken),
     appId,

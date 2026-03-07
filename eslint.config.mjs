@@ -29,7 +29,7 @@ const eslintConfig = [
       "react/react-in-jsx-scope": "off",
       "react/prop-types": "off",
       "react/no-unknown-property": "off",
-      "react/jsx-no-target-blank": "off",
+      "react/jsx-no-target-blank": "error",
     },
     settings: {
       react: {
