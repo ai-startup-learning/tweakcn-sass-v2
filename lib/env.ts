@@ -39,6 +39,14 @@ const serverEnvSchema = z.object({
   // Rate limiting (Vercel KV / Upstash) — optional in local dev without KV
   KV_REST_API_URL: z.string().url().optional().or(z.literal("")),
   KV_REST_API_TOKEN: z.string().optional(),
+
+  // Email (Resend) — optional, emails are skipped if not set
+  RESEND_API_KEY: z.string().optional(),
+  EMAIL_FROM: z.string().optional(),
+
+  // Error monitoring (Sentry) — optional
+  SENTRY_ORG: z.string().optional(),
+  SENTRY_PROJECT: z.string().optional(),
 });
 
 const parsed = serverEnvSchema.safeParse(process.env);

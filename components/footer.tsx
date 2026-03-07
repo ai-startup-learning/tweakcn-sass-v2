@@ -106,9 +106,10 @@ export function Footer() {
           <p className="text-muted-foreground text-xs">
             &copy; {new Date().getFullYear()} SaaS Kit. All rights reserved.
           </p>
-          <p className="text-muted-foreground text-xs">
-            <Link href="/privacy-policy">Privacy Policy</Link>
-          </p>
+          <div className="text-muted-foreground flex gap-4 text-xs">
+            <Link href="/privacy-policy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
+            <Link href="/terms-of-service" className="hover:text-foreground transition-colors">Terms of Service</Link>
+          </div>
         </div>
       </div>
     </footer>

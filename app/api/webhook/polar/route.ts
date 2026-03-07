@@ -1,6 +1,12 @@
 import { db } from "@/db";
-import { subscription } from "@/db/schema";
+import { subscription, user } from "@/db/schema";
 import { Webhooks } from "@polar-sh/nextjs";
+import { eq } from "drizzle-orm";
+import { writeAuditLog } from "@/lib/audit";
+import {
+  sendSubscriptionConfirmationEmail,
+  sendSubscriptionCancelledEmail,
+} from "@/lib/email";
 
 function safeParseDate(value: string | Date | null | undefined): Date | null {
   if (!value) return null;
@@ -23,7 +29,7 @@ export const POST = Webhooks({
       type === "subscription.uncanceled" ||
       type === "subscription.updated"
     ) {
-      const userId = data.customer?.externalId;
+      const userId = data.customer?.externalId as string | undefined;
 
       const subscriptionData = {
         id: data.id,
@@ -48,7 +54,7 @@ export const POST = Webhooks({
         customerCancellationComment: data.customerCancellationComment || null,
         metadata: data.metadata ? JSON.stringify(data.metadata) : null,
         customFieldData: data.customFieldData ? JSON.stringify(data.customFieldData) : null,
-        userId: userId as string | null,
+        userId: userId ?? null,
       };
 
       // Re-throw so Polar retries delivery on DB failure
@@ -81,6 +87,47 @@ export const POST = Webhooks({
             userId: subscriptionData.userId,
           },
         });
+
+      // Audit log + transactional emails (non-blocking — don't retry on failure)
+      if (userId) {
+        const auditAction =
+          type === "subscription.active" || type === "subscription.created"
+            ? "subscription.activated"
+            : type === "subscription.canceled"
+              ? "subscription.cancelled"
+              : type === "subscription.revoked"
+                ? "subscription.revoked"
+                : "subscription.updated";
+
+        await writeAuditLog({
+          userId,
+          action: auditAction,
+          metadata: { subscriptionId: data.id, status: data.status, type },
+        });
+
+        // Look up user email for transactional emails
+        try {
+          const [userData] = await db
+            .select({ email: user.email, name: user.name })
+            .from(user)
+            .where(eq(user.id, userId));
+
+          if (userData) {
+            if (type === "subscription.active") {
+              await sendSubscriptionConfirmationEmail(userData.email, userData.name);
+            } else if (type === "subscription.canceled") {
+              await sendSubscriptionCancelledEmail(
+                userData.email,
+                userData.name,
+                subscriptionData.endsAt
+              );
+            }
+          }
+        } catch (_e) {
+          // Email failures must never fail the webhook response
+          console.error("[webhook/polar] Failed to send subscription email:", _e);
+        }
+      }
     }
   },
 });

@@ -7,6 +7,7 @@ import { getCurrentUserId } from "@/lib/shared";
 import { logError } from "@/lib/shared";
 import { actionError, actionSuccess, ErrorCode, type ActionResult } from "@/types/errors";
 import { polar } from "@/lib/polar";
+import { writeAuditLog } from "@/lib/audit";
 
 export async function deleteAccount(): Promise<ActionResult<boolean>> {
   try {
@@ -22,6 +23,9 @@ export async function deleteAccount(): Promise<ActionResult<boolean>> {
 
     // Delete subscription records (no CASCADE on this table)
     await db.delete(subscription).where(eq(subscription.userId, userId));
+
+    // Write audit log before deleting user (CASCADE would remove it otherwise)
+    await writeAuditLog({ userId, action: "account.deleted" });
 
     // Delete user — CASCADE handles: sessions, accounts, themes,
     // communityThemes, communityThemeTags, themeLikes, aiUsage,

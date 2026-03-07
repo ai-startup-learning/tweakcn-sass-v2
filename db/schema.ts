@@ -211,3 +211,22 @@ export const themeLike = pgTable(
   },
   (table) => [primaryKey({ columns: [table.userId, table.themeId] })]
 );
+
+// Audit log — append-only record of key user/system events
+export const auditLog = pgTable(
+  "audit_log",
+  {
+    id: text("id").primaryKey(),
+    // null userId = system event (e.g. webhook processed without matching user)
+    userId: text("user_id").references(() => user.id, { onDelete: "set null" }),
+    action: text("action").notNull(), // e.g. "account.deleted", "subscription.activated"
+    metadata: text("metadata"), // JSON string with extra context
+    ipAddress: text("ip_address"),
+    userAgent: text("user_agent"),
+    createdAt: timestamp("created_at").notNull(),
+  },
+  (table) => [
+    index("audit_log_user_id_idx").on(table.userId),
+    index("audit_log_created_at_idx").on(table.createdAt),
+  ]
+);

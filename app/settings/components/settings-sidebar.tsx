@@ -3,7 +3,7 @@
 import { Separator } from "@/components/ui/separator";
 import { useSubscription } from "@/hooks/use-subscription";
 import { cn } from "@/lib/utils";
-import { ChartNoAxesCombined, CreditCard, ExternalLink, LucideIcon, Palette, UserCog } from "lucide-react";
+import { ChartNoAxesCombined, CreditCard, ExternalLink, LucideIcon, Monitor, Palette, UserCog } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useMemo } from "react";
@@ -25,6 +25,7 @@ const BASE_NAV_ITEMS: NavItem[] = [
   { type: "link", href: "/settings/themes", label: "Themes", icon: Palette },
   { type: "link", href: "/settings/usage", label: "AI Usage", icon: ChartNoAxesCombined },
   { type: "separator", id: "account-separator" },
+  { type: "link", href: "/settings/sessions", label: "Sessions", icon: Monitor },
   { type: "link", href: "/settings/account", label: "Account", icon: UserCog },
 ];
 

@@ -12,6 +12,7 @@ import type { Metadata, Viewport } from "next";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { Suspense } from "react";
 import "./globals.css";
+import { CookieConsent } from "@/components/cookie-consent";
 
 export const metadata: Metadata = {
   title: "Beautiful themes for shadcn/ui — SaaS Kit | Theme Editor & Generator",
@@ -94,6 +95,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           </Suspense>
         </NuqsAdapter>
         <PostHogInit />
+        <CookieConsent />
       </body>
     </html>
   );
