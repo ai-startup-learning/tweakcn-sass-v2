@@ -31,7 +31,7 @@ export default function SuccessPage() {
           </CardTitle>
           <CardDescription>
             <p className="text-muted-foreground text-center text-base text-pretty md:text-lg">
-              Welcome to <span className="text-foreground font-semibold">tweakcn Pro</span>! Your
+              Welcome to <span className="text-foreground font-semibold">SaaS Kit Pro</span>! Your
               subscription is now active and you have access to all premium features.
             </p>
           </CardDescription>
@@ -57,7 +57,7 @@ export default function SuccessPage() {
           <NoiseEffect />
           <p className="text-muted-foreground w-full text-center text-sm">
             Need help?{" "}
-            <Link href="mailto:sahaj@tweakcn.com" className="text-primary hover:underline">
+            <Link href="mailto:hello@sass-kit-v3.com" className="text-primary hover:underline">
               Contact us
             </Link>
           </p>

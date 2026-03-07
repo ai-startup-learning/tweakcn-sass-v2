@@ -14,21 +14,21 @@ import { Suspense } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Beautiful themes for shadcn/ui — tweakcn | Theme Editor & Generator",
+  title: "Beautiful themes for shadcn/ui — SaaS Kit | Theme Editor & Generator",
   description:
-    "Customize theme for shadcn/ui with tweakcn's interactive editor. Supports Tailwind CSS v4, Shadcn UI, and custom styles. Modify properties, preview changes, and get the code in real time.",
+    "Customize theme for shadcn/ui with SaaS Kit's interactive editor. Supports Tailwind CSS v4, Shadcn UI, and custom styles. Modify properties, preview changes, and get the code in real time.",
   keywords:
     "theme editor, theme generator, shadcn, ui, components, react, tailwind, button, editor, visual editor, component editor, web development, frontend, design system, UI components, React components, Tailwind CSS, shadcn/ui themes",
-  authors: [{ name: "Sahaj Jain" }],
+  authors: [{ name: "SaaS Kit v3 Team" }],
   openGraph: {
-    title: "Beautiful themes for shadcn/ui — tweakcn | Theme Editor & Generator",
+    title: "Beautiful themes for shadcn/ui — SaaS Kit | Theme Editor & Generator",
     description:
-      "Customize theme for shadcn/ui with tweakcn's interactive editor. Supports Tailwind CSS v4, Shadcn UI, and custom styles. Modify properties, preview changes, and get the code in real time.",
-    url: "https://tweakcn.com/",
-    siteName: "tweakcn",
+      "Customize theme for shadcn/ui with SaaS Kit's interactive editor. Supports Tailwind CSS v4, Shadcn UI, and custom styles. Modify properties, preview changes, and get the code in real time.",
+    url: "https://sass-kit-v3.com/",
+    siteName: "SaaS Kit",
     images: [
       {
-        url: "https://tweakcn.com/og-image.v050725.png",
+        url: "https://sass-kit-v3.com/og-image.v050725.png",
         width: 1200,
         height: 630,
       },
@@ -38,10 +38,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Beautiful themes for shadcn/ui — tweakcn | Theme Editor & Generator",
+    title: "Beautiful themes for shadcn/ui — SaaS Kit | Theme Editor & Generator",
     description:
-      "Customize theme for shadcn/ui with tweakcn's interactive editor. Supports Tailwind CSS v4, Shadcn UI, and custom styles. Modify properties, preview changes, and get the code in real time.",
-    images: ["https://tweakcn.com/og-image.v050725.png"],
+      "Customize theme for shadcn/ui with SaaS Kit's interactive editor. Supports Tailwind CSS v4, Shadcn UI, and custom styles. Modify properties, preview changes, and get the code in real time.",
+    images: ["https://sass-kit-v3.com/og-image.v050725.png"],
   },
   robots: "index, follow",
 };

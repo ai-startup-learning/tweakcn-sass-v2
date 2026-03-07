@@ -120,7 +120,7 @@ export async function createTheme(formData: { name: string; styles: ThemeStyles 
       const activeSubscription = await getMyActiveSubscription(userId);
       const isSubscribed =
         !!activeSubscription &&
-        activeSubscription?.productId === process.env.TWEAKCN_PRO_PRODUCT_ID;
+        activeSubscription?.productId === process.env.SAASKIT_PRO_PRODUCT_ID;
 
       if (!isSubscribed) {
         return actionError(

@@ -1,89 +1,63 @@
 <div align="center">
-  <h1>tweakcn.com</h1>
-</div>
-
-<div align="center">
-  <a href="https://vercel.com/oss">
-    <img alt="Vercel OSS Program" src="https://vercel.com/oss/program-badge.svg" />
-  </a>
-  <br />
-  <br />
-  <a href="https://discord.gg/Phs4u2NM3n" target="_blank">
-    <img alt="Discord" src="https://img.shields.io/discord/1353416868769173576?style=for-the-badge&logo=discord&logoColor=%23ffffff">
-  </a>
-  <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/jnsahaj/tweakcn?style=for-the-badge&logo=github">
-  <a href="https://x.com/iamsahaj_xyz">
-    <img alt="X (formerly Twitter) URL" src="https://img.shields.io/twitter/url?url=https%3A%2F%2Fx.com%2Fiamsahaj_xyz&style=for-the-badge&logo=x&label=%40iamsahaj_xyz&color=%2300000000" />
-  </a>
+  <h1>SaaS Kit v3</h1>
+  <p>A production-ready Next.js SaaS starter with a visual theme editor for Tailwind CSS &amp; shadcn/ui</p>
 </div>
 
 <br />
 
-**[tweakcn](https://tweakcn.com)** is a powerful Visual Theme Editor for tailwind CSS & shadcn/ui components. It comes with Beautiful theme presets to get started, while aiming to offer advanced customisation for each aspect of your UI
+**SaaS Kit v3** is a powerful Visual Theme Editor for Tailwind CSS & shadcn/ui components. It comes with beautiful theme presets to get started, while offering advanced customisation for each aspect of your UI.
 
-![tweakcn.com](public/og-image.v050725.png)
+Built on top of [tweakcn](https://github.com/jnsahaj/tweakcn) (Apache 2.0), extended with SaaS features including authentication, billing, AI theme generation, and more.
 
-## Motivation
+## Features
 
-Websites made with shadcn/ui famously look the same. tweakcn is a tool that helps you customize shadcn/ui components visually, to make your components stand-out. The goal is to build a platform where a user can discover endless customization options and then have the ability to put their own twist on it.
+- Visual theme editor for shadcn/ui
+- AI-powered theme generation from images or descriptions
+- Community theme gallery
+- Subscription billing with Polar
+- Authentication with Better Auth (GitHub + Google OAuth)
+- PostgreSQL database with Drizzle ORM
+- Rate limiting with Upstash/Vercel KV
+- Figma integration
 
-## Current Features
+## Getting Started
 
-You can find the full feature list here: https://tweakcn.com/#features
+See [SETUP.md](SETUP.md) for full setup instructions including database, authentication, billing, and deployment.
 
-## Run Locally
-
-**IMPORTANT: For contributions, please see [CONTRIBUTING.md](CONTRIBUTING.md).**
-
-### Prerequisites
-
-- Node.js 18+
-- npm / yarn / pnpm
-
-### Installation
-
-1. Clone the repository:
+### Quick Start
 
 ```bash
-git clone https://github.com/jnsahaj/tweakcn.git
-cd tweakcn
+# Install dependencies
+pnpm install
+
+# Copy environment variables
+cp .env.example .env.local
+# Fill in your credentials in .env.local
+
+# Push database schema
+pnpm db:push
+
+# Start development server
+pnpm dev
 ```
 
-2. Install dependencies:
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-```bash
-npm install
-```
+## Tech Stack
 
-3. Start the development server:
+- **Framework**: Next.js 15 (App Router, Turbopack)
+- **Styling**: Tailwind CSS v4 + shadcn/ui
+- **Database**: PostgreSQL (Neon) + Drizzle ORM
+- **Auth**: Better Auth
+- **Payments**: Polar
+- **AI**: Google Gemini + Groq
+- **Rate Limiting**: Upstash / Vercel KV
 
-```bash
-npm run dev
-```
+## Attribution
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+This project is based on [tweakcn](https://github.com/jnsahaj/tweakcn) by Sahaj Jain, licensed under the Apache License 2.0.
+See [NOTICE](NOTICE) for full attribution details.
 
-## Contributors
+## License
 
-<a href="https://github.com/jnsahaj/tweakcn/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=jnsahaj/tweakcn" />
-</a>
-
-Made with [contrib.rocks](https://contrib.rocks).
-
-### Interested in Contributing?
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-# Star History
-
-<p align="center">
-  <a target="_blank" href="https://star-history.com/#jnsahaj/tweakcn&Date">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=jnsahaj/tweakcn&type=Date&theme=dark">
-      <img alt="GitHub Star History for jnsahaj/tweakcn" src="https://api.star-history.com/svg?repos=jnsahaj/tweakcn&type=Date">
-    </picture>
-  </a>
-</p>
-
-<!-- GitAds-Verify: HX84XPI5OQ816367AROGJ9SROARUHQER -->
+Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for details.

@@ -62,8 +62,8 @@ const CodePanel: React.FC<CodePanelProps> = ({ themeEditorState, themeId }) => {
 
   const getRegistryCommand = (id: string, isSaved: boolean) => {
     const url = isSaved
-      ? `https://tweakcn.com/r/themes/${id}`
-      : `https://tweakcn.com/r/themes/${id}.json`;
+      ? `https://sass-kit-v3.com/r/themes/${id}`
+      : `https://sass-kit-v3.com/r/themes/${id}.json`;
     switch (packageManager) {
       case "pnpm":
         return `pnpm dlx shadcn@latest add ${url}`;

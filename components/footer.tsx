@@ -12,7 +12,7 @@ export function Footer() {
           <div className="col-span-2 max-w-md space-y-4">
             <Link href="/" className="flex items-center gap-2 font-bold">
               <Logo className="size-6" />
-              <span>tweakcn</span>
+              <span>SaaS Kit</span>
             </Link>
             <p className="text-muted-foreground text-sm">
               A powerful visual theme editor for shadcn/ui components with Tailwind CSS support.
@@ -20,7 +20,7 @@ export function Footer() {
             </p>
             <div className="flex gap-4">
               <a
-                href="https://github.com/jnsahaj/tweakcn"
+                href="https://github.com/sass-kit-v3/saaskit-v3"
                 className="text-muted-foreground hover:text-foreground transition-colors"
               >
                 <GitHubIcon className="size-5" />
@@ -76,7 +76,7 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               <li>
                 <a
-                  href="https://github.com/jnsahaj/tweakcn"
+                  href="https://github.com/sass-kit-v3/saaskit-v3"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
                   GitHub
@@ -104,7 +104,7 @@ export function Footer() {
 
         <div className="border-border/40 flex flex-col items-center justify-between gap-4 border-t pt-8 sm:flex-row">
           <p className="text-muted-foreground text-xs">
-            &copy; {new Date().getFullYear()} tweakcn. All rights reserved.
+            &copy; {new Date().getFullYear()} SaaS Kit. All rights reserved.
           </p>
           <p className="text-muted-foreground text-xs">
             <Link href="/privacy-policy">Privacy Policy</Link>

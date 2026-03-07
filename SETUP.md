@@ -82,8 +82,8 @@ For production, create a second OAuth App with your production domain.
 4. Go to Settings > Webhooks — create a webhook pointing to `https://your-domain.com/api/webhook/polar`
    - Set the secret and copy it to `POLAR_WEBHOOK_SECRET`
 5. Copy your Pro product ID from the product URL or API and set:
-   - `TWEAKCN_PRO_PRODUCT_ID` — **server-only**, used for subscription enforcement
-   - `NEXT_PUBLIC_TWEAKCN_PRO_PRODUCT_ID` — **client-side**, used for pricing UI display
+   - `SAASKIT_PRO_PRODUCT_ID` — **server-only**, used for subscription enforcement
+   - `NEXT_PUBLIC_SAASKIT_PRO_PRODUCT_ID` — **client-side**, used for pricing UI display
 
 #### Rate Limiting — Upstash (via Vercel KV)
 1. Create a free Redis database at [upstash.com](https://upstash.com)
@@ -151,12 +151,12 @@ If you are migrating from a previous version of this codebase, migration `0005_s
 
 ## 4. Branding / App Name
 
-Update these files to replace "tweakcn" with your own app name:
+The codebase has been rebranded to **SaaS Kit**. To further customize for your own brand:
 
-- `package.json` — `name` field
+- `package.json` — `name` field (currently `saaskit-v3`)
 - `app/layout.tsx` — page title and metadata
 - `components/` — any hardcoded brand references
-- Environment variable names prefixed with `TWEAKCN_` can be renamed in both `.env.local` and the code that reads them (`lib/subscription.ts`, `actions/themes.ts`, `lib/env.ts`)
+- Environment variable names prefixed with `SAASKIT_` are used for subscription checks (`lib/subscription.ts`, `actions/themes.ts`, `lib/env.ts`)
 
 ---
 
@@ -223,7 +223,7 @@ pnpm build
 | `GOOGLE_FONTS_API_KEY` | Yes | Google Fonts API key |
 | `POLAR_ACCESS_TOKEN` | Yes | Polar.sh API token |
 | `POLAR_WEBHOOK_SECRET` | Yes | Polar.sh webhook signing secret |
-| `TWEAKCN_PRO_PRODUCT_ID` | Yes | Polar product ID — server-only, never expose |
-| `NEXT_PUBLIC_TWEAKCN_PRO_PRODUCT_ID` | Yes | Same product ID — client-side for UI display |
+| `SAASKIT_PRO_PRODUCT_ID` | Yes | Polar product ID — server-only, never expose |
+| `NEXT_PUBLIC_SAASKIT_PRO_PRODUCT_ID` | Yes | Same product ID — client-side for UI display |
 | `KV_REST_API_URL` | Yes | Upstash Redis REST URL (rate limiting) |
 | `KV_REST_API_TOKEN` | Yes | Upstash Redis REST token (rate limiting) |

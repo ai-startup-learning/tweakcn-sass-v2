@@ -1,5 +1,5 @@
 export const FIGMA_CONSTANTS = {
-  shadcraftUrl: "https://shadcraft.com?atp=tweakcn",
+  shadcraftUrl: "https://shadcraft.com?atp=saaskit",
   previewUrl:
     "https://www.figma.com/design/MvIIEVqjGPyKbS000yPTEW/WORKING-%E2%80%A2-Shadcraft-Pro-%E2%80%A2-v1.0.0?node-id=7053-59081&t=WaB2vuyccN1cYCmM-11",
   designers: [
@@ -19,7 +19,7 @@ export const FIGMA_CONSTANTS = {
     {
       step: "Step 2",
       title: "Open the plugin",
-      description: "Launch the tweakcn Figma plugin",
+      description: "Launch the SaaS Kit Figma plugin",
     },
     {
       step: "Step 3",

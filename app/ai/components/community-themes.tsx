@@ -24,7 +24,7 @@ export async function CommunityThemes() {
           </Button>
         </div>
         <p className="text-muted-foreground text-sm">
-          Explore the themes the community is creating with tweakcn.
+          Explore the themes the community is creating with SaaS Kit.
         </p>
       </div>
 

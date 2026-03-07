@@ -97,7 +97,7 @@ export function ThemeCard({
   };
 
   const handleShare = () => {
-    const url = `https://tweakcn.com/themes/${theme.id}`;
+    const url = `https://sass-kit-v3.com/themes/${theme.id}`;
     navigator.clipboard.writeText(url);
     toast({
       title: "Theme URL copied to clipboard!",

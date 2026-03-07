@@ -32,9 +32,9 @@ const serverEnvSchema = z.object({
   POLAR_ACCESS_TOKEN: z.string().min(1, "POLAR_ACCESS_TOKEN is required"),
 
   // Subscription — server-only (never expose to client)
-  TWEAKCN_PRO_PRODUCT_ID: z
+  SAASKIT_PRO_PRODUCT_ID: z
     .string()
-    .min(1, "TWEAKCN_PRO_PRODUCT_ID is required"),
+    .min(1, "SAASKIT_PRO_PRODUCT_ID is required"),
 
   // Rate limiting (Vercel KV / Upstash) — optional in local dev without KV
   KV_REST_API_URL: z.string().url().optional().or(z.literal("")),

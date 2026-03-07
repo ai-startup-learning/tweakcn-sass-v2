@@ -13,8 +13,8 @@ interface ThemeRegistry {
 function generateRegistry() {
   const registry: ThemeRegistry = {
     $schema: "https://ui.shadcn.com/schema/registry.json",
-    name: "tweakcn-theme-registry",
-    homepage: "https://tweakcn.com",
+    name: "saaskit-theme-registry",
+    homepage: "https://sass-kit-v3.com",
     items: [],
   };
 

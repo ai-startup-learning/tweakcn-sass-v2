@@ -131,7 +131,7 @@ export function AuthDialog({
               {contextualCopy?.description ??
                 (isSignIn
                   ? "Sign in to your account to continue"
-                  : "Sign up to get started with tweakcn")}
+                  : "Sign up to get started with SaaS Kit")}
             </p>
           </ResponsiveDialogHeader>
 
@@ -169,7 +169,7 @@ export function AuthDialog({
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
                   <span className="bg-background text-muted-foreground px-2">
-                    {isSignIn ? "New to tweakcn?" : "Already have an account?"}
+                    {isSignIn ? "New to SaaS Kit?" : "Already have an account?"}
                   </span>
                 </div>
               </div>

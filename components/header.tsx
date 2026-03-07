@@ -17,7 +17,7 @@ import { useState } from "react";
 import { GetProCTA } from "./get-pro-cta";
 
 export function Header() {
-  const { stargazersCount } = useGithubStars("jnsahaj", "tweakcn");
+  const { stargazersCount } = useGithubStars("sass-kit-v3", "saaskit-v3");
   const [figmaDialogOpen, setFigmaDialogOpen] = useState(false);
 
   return (
@@ -25,15 +25,15 @@ export function Header() {
       <div className="flex items-center justify-between gap-2 p-4">
         <div className="flex items-center gap-1">
           <Link href="/" className="flex items-center gap-2">
-            <Logo className="size-6" title="tweakcn" />
-            <span className="hidden font-bold md:block">tweakcn</span>
+            <Logo className="size-6" title="SaaS Kit" />
+            <span className="hidden font-bold md:block">SaaS Kit</span>
           </Link>
         </div>
         <div className="flex items-center gap-3.5">
           <GetProCTA className="h-8" />
 
           <SocialLink
-            href="https://github.com/jnsahaj/tweakcn"
+            href="https://github.com/sass-kit-v3/saaskit-v3"
             className="flex items-center gap-2 text-sm font-bold"
           >
             <GitHubIcon className="size-4" />

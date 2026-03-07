@@ -8,9 +8,9 @@ import { motion } from "motion/react";
 
 const faqs = [
   {
-    question: "What is tweakcn?",
+    question: "What is SaaS Kit?",
     answer:
-      "tweakcn is a visual theme editor for shadcn/ui components. It allows you to customize your theme visually and export the code for your project.",
+      "SaaS Kit is a visual theme editor for shadcn/ui components. It allows you to customize your theme visually and export the code for your project.",
   },
   {
     question: "Is it free?",
@@ -53,7 +53,7 @@ export function FAQ() {
               Got questions? We&apos;ve got answers. If you can&apos;t find what you&apos;re looking for, feel free to reach out.
             </p>
             <div className="text-sm text-muted-foreground">
-              <p>Contact us at <a href="#" className="text-primary underline">sahaj@tweakcn.com</a></p>
+              <p>Contact us at <a href="#" className="text-primary underline">hello@sass-kit-v3.com</a></p>
             </div>
           </motion.div>
 

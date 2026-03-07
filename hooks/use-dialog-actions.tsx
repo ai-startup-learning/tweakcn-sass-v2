@@ -178,7 +178,7 @@ function useDialogActionsStore(): DialogActionsContextType {
     const currentPreset = presetId ? getPreset(presetId) : undefined;
 
     if (!currentPreset) {
-      setShareUrl(`https://tweakcn.com/editor/theme`);
+      setShareUrl(`https://sass-kit-v3.com/editor/theme`);
       setShareDialogOpen(true);
       return;
     }
@@ -192,8 +192,8 @@ function useDialogActionsStore(): DialogActionsContextType {
     });
 
     const url = isSavedPreset
-      ? `https://tweakcn.com/themes/${id}`
-      : `https://tweakcn.com/editor/theme?theme=${id}`;
+      ? `https://sass-kit-v3.com/themes/${id}`
+      : `https://sass-kit-v3.com/editor/theme?theme=${id}`;
 
     setShareUrl(url);
     setShareDialogOpen(true);
@@ -216,9 +216,9 @@ function useDialogActionsStore(): DialogActionsContextType {
     });
 
     const themeUrl = isSavedPreset
-      ? `https://tweakcn.com/r/v0/${presetId}`
-      : `https://tweakcn.com/r/v0/${presetId}.json`;
-    const title = `"${themeName}" from tweakcn`.slice(0, 32);
+      ? `https://sass-kit-v3.com/r/v0/${presetId}`
+      : `https://sass-kit-v3.com/r/v0/${presetId}.json`;
+    const title = `"${themeName}" from SaaS Kit`.slice(0, 32);
     const v0Url = `https://v0.dev/chat/api/open?url=${encodeURIComponent(themeUrl)}&title=${encodeURIComponent(title)}`;
     window.open(v0Url, "_blank", "noopener,noreferrer");
   };

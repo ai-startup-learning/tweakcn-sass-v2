@@ -1,18 +1,14 @@
-# Contributing to tweakcn.com
+# Contributing to SaaS Kit v3
 
-Thanks for your interest in contributing to tweakcn.com! We're excited to have you here.
+Thanks for your interest in contributing to SaaS Kit v3! We're excited to have you here.
 
-Please take a moment to review this document before submitting your first pull request. We also strongly recommend checking open [Issues](https://github.com/jnsahaj/tweakcn/issues) and [Pull Requests](https://github.com/jnsahaj/tweakcn/pulls) to see if someone else is working on something similar.
-
-If you need any help or want to discuss ideas, feel free to join our community on [Discord](https://discord.com/invite/Phs4u2NM3n).
+Please take a moment to review this document before submitting your first pull request.
 
 ## About This Project
 
-tweakcn.com is a powerful Visual Theme Editor designed for Tailwind CSS & shadcn/ui components. Websites built with shadcn/ui often share a similar look; tweakcn helps you visually customize these components to make your projects stand out.
+SaaS Kit v3 is a production-ready Next.js SaaS starter that includes a visual theme editor for Tailwind CSS & shadcn/ui components, authentication, billing, AI theme generation, and more.
 
 ## Project Structure
-
-This repository contains the Next.js application for tweakcn.com. Here's a simplified overview of the project's directory structure:
 
 ```
 ├── actions/          # Next.js Server Actions
@@ -40,149 +36,62 @@ This repository contains the Next.js application for tweakcn.com. Here's a simpl
 └── utils/            # General utility functions and helpers
 ```
 
-## How to Contribute
+## Prerequisites
 
-### Non-Technical
+- Node.js 22+
+- pnpm
 
-Even if you don't plan to write code, there are many ways to contribute:
+## Setup
 
-- **Create an Issue:** If you find a bug, have an idea for a new feature, or want to suggest an improvement, please [create an issue on GitHub](https://github.com/jnsahaj/tweakcn/issues). This helps us track and prioritize feedback.
-- **Spread the Word:** If you like tweakcn.com, please share it with your friends, colleagues, and on social media. Helping grow the community makes the tool better for everyone.
-- **Use tweakcn.com:** The best feedback comes from real-world usage! As you use the editor, if you encounter any issues or have ideas for improvement, please let us know by creating an issue or reaching out on [Discord](https://discord.com/invite/Phs4u2NM3n).
-
-### Prerequisites
-
-- Node.js 18+
-- npm / yarn / pnpm
-
-### Installation
-
-1.  **Fork the Repository:** Start by creating your own copy of the [tweakcn repository](https://github.com/jnsahaj/tweakcn) on GitHub. Click the "Fork" button in the top-right corner.
-
-2.  **Clone Your Fork:** Clone the repository you just forked to your local machine:
+1. Clone your fork and install dependencies:
 
     ```bash
-    git clone https://github.com/YOUR_USERNAME/tweakcn.git
-    cd tweakcn
+    git clone https://github.com/YOUR_ORG/saaskit-v3.git
+    cd saaskit-v3
+    pnpm install
     ```
 
-    Replace `YOUR_USERNAME` with your actual GitHub username.
-
-3.  **Install Dependencies:** Install the necessary project dependencies:
+2. Set up environment variables:
 
     ```bash
-    npm install
+    cp .env.example .env.local
     ```
+    Fill in your credentials. See [SETUP.md](SETUP.md) for detailed instructions.
 
-### Set up the development environment (follow closely)
-
-1.  **Configure Environment Variables:** 
+3. Push the database schema:
 
     ```bash
-    cp .env.example .env.local # Copy the example environment file
+    pnpm db:push
     ```
-    - Open the `.env.local` file and replace the placeholder values with your actual credentials obtained from the services.
 
-2.  **Apply Database Schema:** Push the database schema defined in `db/schema.ts` to your Neon database using Drizzle Kit:
+4. Start the development server:
 
     ```bash
-    npx drizzle-kit push
+    pnpm dev
     ```
 
-    - _(Optional)_ You can view your database structure using Drizzle Studio by running `npx drizzle-kit studio`.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-3.  **Create a New Branch:** Before making changes, create a dedicated branch for your feature or bug fix:
+## Submitting Changes
 
-    ```bash
-    git checkout -b your-descriptive-branch-name
-    ```
+1. Create a branch: `git checkout -b feature/your-feature-name`
+2. Make your changes and test them locally
+3. Commit with a descriptive message following Conventional Commits:
+   - `feat(editor): Add contrast checker component`
+   - `fix(auth): Correct GitHub redirect URL`
+   - `docs(readme): Update setup instructions`
+4. Push and open a Pull Request
 
-    (e.g., `feature/add-community-gallery`, `fix/login-button-style`)
+## Troubleshooting
 
-4.  **Start the Development Server:**
+If you hit issues after pulling new changes:
 
-    ```bash
-    npm run dev
-    ```
-
-5.  Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-You're now ready to start coding!
-
-### Troubleshooting Setup
-
-If you encounter unexpected issues, especially after pulling new changes or related to database/auth setup, try resetting your local environment:
-
-1.  Stop the development server (Ctrl+C).
-
-2.  Delete the `node_modules` and `.next` directories:
-
-    ```bash
-    # On macOS / Linux:
-    rm -rf node_modules .next
-
-    # On Windows (PowerShell):
-    Remove-Item -Recurse -Force node_modules, .next
-    ```
-
-3.  Reinstall dependencies:
-
-    ```bash
-    npm install
-    ```
-
-4.  Re-run the database push command (optional, but good practice if schema might have changed):
-
-    ```bash
-    npx drizzle-kit push
-    ```
-
-5.  Restart the development server:
-
-    ```bash
-    npm run dev
-    ```
-
-## Submitting Your Changes (Pull Request Workflow)
-
-Once you've made your changes and tested them locally, follow these steps to submit them for review:
-
-1.  **Stage Your Changes:** Add the files you've modified to the Git staging area.
-
-    ```bash
-    git add .
-    ```
-
-2.  **Commit Your Changes:** Commit your staged changes with a descriptive message that follows the **Conventional Commits** specification. This helps automate releases and makes the commit history easier to understand.
-
-    ```bash
-    git commit -m "feat(editor): Add contrast checker component"
-    ```
-
-    - **Format:** `type(scope): description` (e.g., `fix(auth): Correct GitHub redirect URL`, `docs(readme): Update setup instructions`).
-    - **Common Types:** `feat` (new feature), `fix` (bug fix), `docs` (documentation), `style` (code style), `chore` (build process, tooling).
-    - Refer to the [Conventional Commits specification](https://www.conventionalcommits.org/en/v1.0.0/) for more details.
-
-3.  **Push to Your Fork:** Push your committed changes to the branch on your forked repository on GitHub.
-
-    ```bash
-    git push origin your-descriptive-branch-name
-    ```
-
-    Replace `your-descriptive-branch-name` with the actual name of your branch.
-
-4.  **Open a Pull Request (PR):**
-
-    - Go to the original [tweakcn repository](https://github.com/jnsahaj/tweakcn) on GitHub.
-    - You should see a prompt suggesting you create a Pull Request from your recently pushed branch. Click on it. If not, navigate to the "Pull requests" tab and click "New pull request".
-    - Ensure the base repository is `jnsahaj/tweakcn` and the base branch is `main` (or the appropriate target branch).
-    - Ensure the head repository is your fork and the compare branch is `your-descriptive-branch-name`.
-    - **Write a Clear Description:** Fill out the pull request template (if one exists). Provide a clear title and a detailed description of the changes you've made. Explain _why_ you made the changes and link to any relevant GitHub Issues (e.g., "Closes #123").
-
-5.  **Review Process:**
-
-    - Once submitted, maintainers will review your pull request.
-    - Maintainers may provide feedback or request changes directly on the pull request. Please address these comments by pushing further commits to your branch.
-    - Once approved, a maintainer will merge your changes into the main project.
+```bash
+# Stop dev server, then:
+rm -rf node_modules .next
+pnpm install
+pnpm db:push
+pnpm dev
+```
 
 Thank you for contributing!

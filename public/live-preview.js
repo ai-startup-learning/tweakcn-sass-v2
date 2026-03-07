@@ -245,15 +245,15 @@ function sendMessageToParent(message) {
   }
 };
 
-const TWEAKCN_MESSAGE = {
-  PING: "TWEAKCN_PING",
-  PONG: "TWEAKCN_PONG",
-  CHECK_SHADCN: "TWEAKCN_CHECK_SHADCN",
-  SHADCN_STATUS: "TWEAKCN_SHADCN_STATUS",
-  THEME_UPDATE: "TWEAKCN_THEME_UPDATE",
-  THEME_APPLIED: "TWEAKCN_THEME_APPLIED",
-  EMBED_LOADED: "TWEAKCN_EMBED_LOADED",
-  EMBED_ERROR: "TWEAKCN_EMBED_ERROR",
+const SAASKIT_MESSAGE = {
+  PING: "SAASKIT_PING",
+  PONG: "SAASKIT_PONG",
+  CHECK_SHADCN: "SAASKIT_CHECK_SHADCN",
+  SHADCN_STATUS: "SAASKIT_SHADCN_STATUS",
+  THEME_UPDATE: "SAASKIT_THEME_UPDATE",
+  THEME_APPLIED: "SAASKIT_THEME_APPLIED",
+  EMBED_LOADED: "SAASKIT_EMBED_LOADED",
+  EMBED_ERROR: "SAASKIT_EMBED_ERROR",
 };
 
 // ----- MAIN SCRIPT -----
@@ -272,29 +272,29 @@ const TWEAKCN_MESSAGE = {
     // TODO: Remove localhost once this is live
     const ALLOWED_ORIGINS = ['https://tweakcn.com', 'http://localhost:3000'];
     if (!ALLOWED_ORIGINS.includes(event.origin)){
-      sendMessageToParent({ type: TWEAKCN_MESSAGE.EMBED_ERROR, payload: { error: "Origin not allowed. Preview failed to establish the connection with tweakcn." } });
+      sendMessageToParent({ type: SAASKIT_MESSAGE.EMBED_ERROR, payload: { error: "Origin not allowed. Preview failed to establish the connection with tweakcn." } });
       return;
     } ;    
     
     const { type, payload } = event.data;
 
     switch (type) {
-      case TWEAKCN_MESSAGE.PING:
-        sendMessageToParent({ type: TWEAKCN_MESSAGE.PONG });
+      case SAASKIT_MESSAGE.PING:
+        sendMessageToParent({ type: SAASKIT_MESSAGE.PONG });
         break;
 
-      case TWEAKCN_MESSAGE.CHECK_SHADCN:
+      case SAASKIT_MESSAGE.CHECK_SHADCN:
         const supportInfo = checkShadcnSupport();
         sendMessageToParent({
-          type: TWEAKCN_MESSAGE.SHADCN_STATUS,
+          type: SAASKIT_MESSAGE.SHADCN_STATUS,
           payload: supportInfo,
         });
         break;
 
-      case TWEAKCN_MESSAGE.THEME_UPDATE:
+      case SAASKIT_MESSAGE.THEME_UPDATE:
         if (payload && payload.themeState) {
           applyTheme(payload.themeState);
-          sendMessageToParent({ type: TWEAKCN_MESSAGE.THEME_APPLIED });
+          sendMessageToParent({ type: SAASKIT_MESSAGE.THEME_APPLIED });
         }
         break;
 
@@ -309,7 +309,7 @@ const TWEAKCN_MESSAGE = {
   // ----- NAVIGATION TRACKING -----
   const emitNavigationUpdate = () => {
     try {
-      sendMessageToParent({ type: TWEAKCN_MESSAGE.NAVIGATION_UPDATE, payload: { url: window.location.href } });
+      sendMessageToParent({ type: SAASKIT_MESSAGE.NAVIGATION_UPDATE, payload: { url: window.location.href } });
     } catch (e) {
       // noop
     }
@@ -349,6 +349,6 @@ const TWEAKCN_MESSAGE = {
   };
 
   // Announce that the embed script is ready and send initial URL
-  sendMessageToParent({ type: TWEAKCN_MESSAGE.EMBED_LOADED });
+  sendMessageToParent({ type: SAASKIT_MESSAGE.EMBED_LOADED });
   emitNavigationUpdate();
 })(); 

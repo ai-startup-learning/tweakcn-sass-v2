@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.BASE_URL ?? "https://tweakcn.com";
+  const baseUrl = process.env.BASE_URL ?? "https://sass-kit-v3.com";
 
   return [
     {

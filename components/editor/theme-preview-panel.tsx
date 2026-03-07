@@ -204,7 +204,7 @@ const ThemePreviewPanel = ({
                 <ExamplesPreviewContainer className="size-full">
                   <div className="absolute top-4 right-4 z-10">
                     <Link
-                      href="https://shadcnblocks.com?utm_source=tweakcn&utm_medium=theme-editor-preview"
+                      href="https://shadcnblocks.com?utm_source=saaskit&utm_medium=theme-editor-preview"
                       target="_blank"
                     >
                       <Button variant="outline" className="group h-12 shadow-sm">

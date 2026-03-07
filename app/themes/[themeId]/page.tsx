@@ -24,17 +24,17 @@ export async function generateMetadata({ params }: ThemePageProps): Promise<Meta
       : `Discover shadcn/ui themes - ${theme?.name} theme`;
 
   return {
-    title: theme?.name + " - tweakcn",
+    title: theme?.name + " - SaaS Kit",
     description,
     keywords: tags.length > 0 ? tags : undefined,
     openGraph: {
-      title: `${theme?.name} - tweakcn`,
+      title: `${theme?.name} - SaaS Kit`,
       description,
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: `${theme?.name} - tweakcn`,
+      title: `${theme?.name} - SaaS Kit`,
       description,
     },
     robots: {

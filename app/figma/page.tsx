@@ -49,10 +49,10 @@ export default function FigmaPage() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "Product",
-    name: "Shadcraft Figma UI Kit - tweakcn Integration",
+    name: "Shadcraft Figma UI Kit - SaaS Kit Integration",
     description:
-      "Professional Figma UI kit with 51 components, 44 blocks, dark mode support, and seamless tweakcn theme integration",
-    image: "https://tweakcn.com/figma-onboarding/shadcraft-preview.jpg",
+      "Professional Figma UI kit with 51 components, 44 blocks, dark mode support, and seamless SaaS Kit theme integration",
+    image: "https://sass-kit-v3.com/figma-onboarding/shadcraft-preview.jpg",
     brand: {
       "@type": "Brand",
       name: "Shadcraft",
@@ -120,8 +120,8 @@ export default function FigmaPage() {
           <header className="p-8 pb-5">
             <div className="flex items-center justify-center gap-2">
               <div className="flex items-center gap-2">
-                <Logo className="h-6 w-6" alt="tweakcn logo" />
-                <div className="text-lg font-bold">tweakcn</div>
+                <Logo className="h-6 w-6" alt="SaaS Kit logo" />
+                <div className="text-lg font-bold">SaaS Kit</div>
               </div>
               <X className="h-4 w-4" aria-hidden="true" />
               <Link href={FIGMA_CONSTANTS.shadcraftUrl} target="_blank" rel="noopener noreferrer">
