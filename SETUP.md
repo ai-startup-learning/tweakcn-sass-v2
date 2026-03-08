@@ -151,12 +151,30 @@ If you are migrating from a previous version of this codebase, migration `0005_s
 
 ## 4. Branding / App Name
 
-The codebase has been rebranded to **SaaS Kit**. To further customize for your own brand:
+All brand strings are centralized. To rebrand for a new product, edit **only these files**:
 
-- `package.json` — `name` field (currently `saaskit-v3`)
-- `app/layout.tsx` — page title and metadata
-- `components/` — any hardcoded brand references
-- Environment variable names prefixed with `SAASKIT_` are used for subscription checks (`lib/subscription.ts`, `actions/themes.ts`, `lib/env.ts`)
+### 1. `config/site.ts`
+
+Change `name`, `url`, `ogImage`, `tagline`, `description`, `creator`, `email`, `links`, and `proTier`.
+Every page title, metadata tag, email template, footer link, social icon, share URL, and AI persona derives from this file automatically.
+
+### 2. `.env.local`
+
+Update `BASE_URL` (your production domain), `EMAIL_FROM`, and all service secrets.
+
+### 3. `public/live-preview.js` and `public/live-preview.min.js`
+
+Update the `ALLOWED_ORIGINS` array (plain JS — cannot import from `config/site.ts`):
+
+```js
+const ALLOWED_ORIGINS = ['https://your-domain.com', 'http://localhost:3000'];
+```
+
+### 4. `package.json`
+
+Update the `name` field (currently `saaskit-v3`).
+
+That's it. No other files need to be touched for a full rebrand.
 
 ---
 
