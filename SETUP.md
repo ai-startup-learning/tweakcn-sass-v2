@@ -137,6 +137,24 @@ Drizzle does not auto-rollback. To undo a migration:
 2. Run `pnpm db:generate` to register it, then `pnpm db:migrate`
 3. Or use `pnpm db:drop` to remove a bad migration from the journal before it is applied
 
+### Reset / wipe all tables
+
+To completely wipe your database and start fresh (destroys all data):
+
+1. Go to your [Neon dashboard](https://console.neon.tech/) → **SQL Editor**
+1. Run:
+
+```sql
+DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
+```
+
+1. Re-apply the schema:
+
+```bash
+pnpm db:push
+```
+
 ### Inspect the DB
 
 ```bash
