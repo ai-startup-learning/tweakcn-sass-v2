@@ -43,6 +43,18 @@ export async function middleware(request: NextRequest) {
     if (pathname === "/dashboard" || pathname === "/settings") {
       return NextResponse.redirect(new URL("/settings/themes", request.url));
     }
+
+    // Admin routes — check email against ADMIN_EMAILS
+    if (pathname.startsWith("/admin")) {
+      const adminEmails = (process.env.ADMIN_EMAILS ?? "")
+        .split(",")
+        .map((e) => e.trim().toLowerCase())
+        .filter(Boolean);
+      const userEmail = session.user.email?.toLowerCase() ?? "";
+      if (adminEmails.length === 0 || !adminEmails.includes(userEmail)) {
+        return NextResponse.redirect(new URL("/", request.url));
+      }
+    }
   }
 
   return NextResponse.next();
@@ -53,6 +65,7 @@ export const config = {
     "/editor/theme/:themeId",
     "/dashboard",
     "/settings/:path*",
+    "/admin/:path*",
     "/success",
     "/api/generate-theme",
     "/api/enhance-prompt",

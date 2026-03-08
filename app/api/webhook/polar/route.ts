@@ -7,6 +7,7 @@ import {
   sendSubscriptionConfirmationEmail,
   sendSubscriptionCancelledEmail,
 } from "@/lib/email";
+import { after } from "next/server";
 
 function safeParseDate(value: string | Date | null | undefined): Date | null {
   if (!value) return null;
@@ -88,7 +89,6 @@ export const POST = Webhooks({
           },
         });
 
-      // Audit log + transactional emails (non-blocking — don't retry on failure)
       if (userId) {
         const auditAction =
           type === "subscription.active" || type === "subscription.created"
@@ -105,28 +105,33 @@ export const POST = Webhooks({
           metadata: { subscriptionId: data.id, status: data.status, type },
         });
 
-        // Look up user email for transactional emails
-        try {
-          const [userData] = await db
-            .select({ email: user.email, name: user.name })
-            .from(user)
-            .where(eq(user.id, userId));
+        // Send transactional emails after the response is returned (non-blocking).
+        // Uses Next.js after() so email failures never affect webhook delivery.
+        // Idempotency key prevents duplicate sends on Polar webhook re-delivery.
+        after(async () => {
+          try {
+            const [userData] = await db
+              .select({ email: user.email, name: user.name })
+              .from(user)
+              .where(eq(user.id, userId));
 
-          if (userData) {
-            if (type === "subscription.active") {
-              await sendSubscriptionConfirmationEmail(userData.email, userData.name);
-            } else if (type === "subscription.canceled") {
-              await sendSubscriptionCancelledEmail(
-                userData.email,
-                userData.name,
-                subscriptionData.endsAt
-              );
+            if (userData) {
+              const idempotencyKey = `${data.id}-${type}`;
+              if (type === "subscription.active") {
+                await sendSubscriptionConfirmationEmail(userData.email, userData.name, idempotencyKey);
+              } else if (type === "subscription.canceled") {
+                await sendSubscriptionCancelledEmail(
+                  userData.email,
+                  userData.name,
+                  subscriptionData.endsAt,
+                  idempotencyKey,
+                );
+              }
             }
+          } catch (e) {
+            console.error("[webhook/polar] Failed to send subscription email:", e);
           }
-        } catch (_e) {
-          // Email failures must never fail the webhook response
-          console.error("[webhook/polar] Failed to send subscription email:", _e);
-        }
+        });
       }
     }
   },

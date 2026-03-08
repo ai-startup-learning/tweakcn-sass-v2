@@ -3,25 +3,22 @@ import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
 import { Suspense } from "react";
 import { CommunityThemeCard, CommunityThemeCardSkeleton } from "./community-theme-card";
-import { ThemePreset } from "@/types/theme";
-import { defaultPresets } from "@/utils/theme-presets";
-
-// TODO: Remove this once we have a real API to fetch the community themes
-const getDefaultThemePresets = async () => {
-  await new Promise((resolve) => setTimeout(resolve, 300));
-  return defaultPresets;
-};
+import { getCommunityThemes } from "@/actions/community-themes";
+import type { CommunityThemesResponse } from "@/types/community";
+import Link from "next/link";
 
 export async function CommunityThemes() {
-  const themePresetsPromise = getDefaultThemePresets();
+  const themesPromise = getCommunityThemes("popular", undefined, 6);
 
   return (
     <>
       <div className="flex flex-col gap-1">
         <div className="flex items-center justify-between">
           <h2 className="font-semibold">From the Community</h2>
-          <Button variant="link" className="h-fit gap-1 p-0 [&>svg]:size-3">
-            View All <ChevronRight />
+          <Button variant="link" asChild className="h-fit gap-1 p-0 [&>svg]:size-3">
+            <Link href="/community">
+              View All <ChevronRight />
+            </Link>
           </Button>
         </div>
         <p className="text-muted-foreground text-sm">
@@ -39,7 +36,7 @@ export async function CommunityThemes() {
             </>
           }
         >
-          <CommunityThemeCards themePresetsPromise={themePresetsPromise} />
+          <CommunityThemeCards themesPromise={themesPromise} />
         </Suspense>
       </div>
     </>
@@ -47,26 +44,24 @@ export async function CommunityThemes() {
 }
 
 interface CommunityThemeCardsProps {
-  themePresetsPromise: Promise<Record<string, ThemePreset>>;
+  themesPromise: Promise<CommunityThemesResponse>;
 }
 
-export async function CommunityThemeCards({ themePresetsPromise }: CommunityThemeCardsProps) {
-  const themePresets = await themePresetsPromise;
-  const presets = Object.entries(themePresets).reduce(
-    (acc, [id, preset]) => {
-      acc[id] = {
-        label: preset.label,
-        styles: preset.styles,
-      };
-      return acc;
-    },
-    {} as Record<string, ThemePreset>
-  );
+export async function CommunityThemeCards({ themesPromise }: CommunityThemeCardsProps) {
+  const { themes } = await themesPromise;
+
+  if (themes.length === 0) {
+    return (
+      <p className="text-muted-foreground col-span-full text-center text-sm">
+        No community themes yet. Be the first to publish one!
+      </p>
+    );
+  }
 
   return (
     <>
-      {Object.values(presets).map((preset) => (
-        <CommunityThemeCard key={preset.label} themePreset={preset} />
+      {themes.map((theme) => (
+        <CommunityThemeCard key={theme.id} theme={theme} />
       ))}
     </>
   );

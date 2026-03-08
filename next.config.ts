@@ -20,7 +20,7 @@ const securityHeaders = [
       "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
       "font-src 'self' data: https://fonts.gstatic.com",
       "img-src 'self' data: blob: https:",
-      "connect-src 'self' https://app.posthog.com https://eu.i.posthog.com https://generativelanguage.googleapis.com https://fonts.googleapis.com https://fonts.gstatic.com",
+      "connect-src 'self' https://app.posthog.com https://eu.i.posthog.com https://generativelanguage.googleapis.com https://fonts.googleapis.com https://fonts.gstatic.com https://*.sentry.io",
       "frame-src 'none'",
       "object-src 'none'",
       "base-uri 'self'",

@@ -3,6 +3,7 @@ import { getTheme } from "@/actions/themes";
 import { getCommunityDataForTheme } from "@/actions/community-themes";
 import ThemeView from "@/components/theme-view";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 interface ThemePageProps {
   params: Promise<{
@@ -51,6 +52,9 @@ export default async function ThemePage({ params }: ThemePageProps) {
     getTheme(themeId),
     getCommunityDataForTheme(themeId),
   ]);
+
+  // Only publicly discoverable for published community themes
+  if (!communityData) notFound();
 
   return (
     <div className="flex flex-1 flex-col">

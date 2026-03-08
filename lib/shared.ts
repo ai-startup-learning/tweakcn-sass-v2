@@ -1,4 +1,5 @@
 import { UnauthorizedError } from "@/types/errors";
+import * as Sentry from "@sentry/nextjs";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { NextRequest } from "next/server";
@@ -34,6 +35,7 @@ export function logError(error: Error, context?: Record<string, unknown>) {
   if (error.name === "UnauthorizedError" || error.name === "ValidationError") {
     console.warn("Expected error:", { error: error.message, context });
   } else {
+    Sentry.captureException(error, { extra: context });
     console.error("Unexpected error:", {
       error: error.message,
       stack: error.stack,

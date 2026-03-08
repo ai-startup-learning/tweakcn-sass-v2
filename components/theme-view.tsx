@@ -11,9 +11,10 @@ import { useSessionGuard } from "@/hooks/use-guards";
 import { usePostLoginAction } from "@/hooks/use-post-login-action";
 import type { Theme } from "@/types/theme";
 import { cn } from "@/lib/utils";
-import { Calendar, Edit, Heart, Moon, Share2, Sun } from "lucide-react";
+import { Calendar, Copy, Edit, Heart, Moon, Share2, Sun } from "lucide-react";
 import { notFound, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
+import { forkTheme } from "@/actions/themes";
 import { CodeButton } from "./editor/action-bar/components/code-button";
 import { CodePanelDialog } from "./editor/code-panel-dialog";
 import ThemePreviewPanel from "./editor/theme-preview-panel";
@@ -124,6 +125,7 @@ export default function ThemeView({ theme, communityData }: ThemeViewProps) {
           </div>
           <div className="flex shrink-0 flex-wrap items-center gap-2">
             {communityData && <LikeButton communityData={communityData} />}
+            <ForkButton themeId={theme.id} />
             <Button variant="outline" size="icon" onClick={toggleTheme}>
               {currentMode === "dark" ? (
                 <Sun className="size-4" />
@@ -191,6 +193,44 @@ function CommunityAuthorInfo({
         {communityData.author.name}
       </span>
     </div>
+  );
+}
+
+function ForkButton({ themeId }: { themeId: string }) {
+  const router = useRouter();
+  const { checkValidSession } = useSessionGuard();
+  const [isPending, startTransition] = useTransition();
+
+  usePostLoginAction("FORK_THEME", (data?: { themeId: string }) => {
+    if (data?.themeId === themeId) {
+      startTransition(async () => {
+        const result = await forkTheme(themeId);
+        if (result.success) {
+          router.push("/editor/theme");
+        } else {
+          toast({ title: result.error?.message ?? "Failed to save theme", variant: "destructive" });
+        }
+      });
+    }
+  });
+
+  const handleFork = () => {
+    if (!checkValidSession("signin", "FORK_THEME", { themeId })) return;
+    startTransition(async () => {
+      const result = await forkTheme(themeId);
+      if (result.success) {
+        router.push("/editor/theme");
+      } else {
+        toast({ title: result.error?.message ?? "Failed to save theme", variant: "destructive" });
+      }
+    });
+  };
+
+  return (
+    <Button variant="default" size="default" onClick={handleFork} disabled={isPending}>
+      <Copy className="size-4" />
+      {isPending ? "Saving..." : "Use this theme"}
+    </Button>
   );
 }
 

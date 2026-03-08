@@ -1,4 +1,5 @@
 "use server";
+import * as Sentry from "@sentry/nextjs";
 
 import { z } from "zod";
 import { db } from "@/db";
@@ -211,6 +212,62 @@ export async function deleteTheme(themeId: string) {
     return deletedTheme;
   } catch (error) {
     logError(error as Error, { action: "deleteTheme", themeId });
+    throw error;
+  }
+}
+
+export async function forkTheme(sourceThemeId: string): Promise<ActionResult<{ id: string }>> {
+  try {
+    const userId = await getCurrentUserId();
+
+    if (!sourceThemeId) {
+      throw new ValidationError("Theme ID required");
+    }
+
+    // Load the source theme
+    const [source] = await db
+      .select()
+      .from(themeTable)
+      .where(eq(themeTable.id, sourceThemeId))
+      .limit(1);
+
+    if (!source) {
+      throw new ThemeNotFoundError();
+    }
+
+    // Respect free tier theme limit
+    const userThemes = await db.select().from(themeTable).where(eq(themeTable.userId, userId));
+
+    if (userThemes.length >= MAX_FREE_THEMES) {
+      const activeSubscription = await getMyActiveSubscription(userId);
+      const isSubscribed =
+        !!activeSubscription &&
+        activeSubscription?.productId === process.env.SAASKIT_PRO_PRODUCT_ID;
+
+      if (!isSubscribed) {
+        return actionError(
+          ErrorCode.THEME_LIMIT_REACHED,
+          `You have reached the limit of ${MAX_FREE_THEMES} themes.`
+        );
+      }
+    }
+
+    const now = new Date();
+    const [forked] = await db
+      .insert(themeTable)
+      .values({
+        id: crypto.randomUUID(),
+        userId,
+        name: `Copy of ${source.name}`,
+        styles: source.styles,
+        createdAt: now,
+        updatedAt: now,
+      })
+      .returning({ id: themeTable.id });
+
+    return actionSuccess({ id: forked.id });
+  } catch (error) {
+    logError(error as Error, { action: "forkTheme", sourceThemeId });
     throw error;
   }
 }

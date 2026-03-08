@@ -57,6 +57,11 @@ function getContextualCopy(actionType?: PostLoginActionType | null) {
         title: "Sign in to continue",
         description: "Sign in to complete your purchase",
       };
+    case "FORK_THEME":
+      return {
+        title: "Sign in to use this theme",
+        description: "Sign in to save a copy of this theme to your account",
+      };
     default:
       return null;
   }

@@ -254,12 +254,23 @@ pnpm build
 | `GITHUB_CLIENT_SECRET` | Yes | GitHub OAuth App client secret |
 | `GOOGLE_CLIENT_ID` | Yes | Google OAuth client ID |
 | `GOOGLE_CLIENT_SECRET` | Yes | Google OAuth client secret |
-| `GOOGLE_API_KEY` | Yes | Google Gemini API key |
-| `GROQ_API_KEY` | No | Groq API key (optional fast inference) |
-| `GOOGLE_FONTS_API_KEY` | Yes | Google Fonts API key |
+| `AI_PROVIDER` | No | AI provider: `google` \| `openai` \| `anthropic` \| `groq` (default: `google`) |
+| `GOOGLE_API_KEY` | No | Google Gemini API key (required if `AI_PROVIDER=google`) |
+| `OPENAI_API_KEY` | No | OpenAI API key (required if `AI_PROVIDER=openai`) |
+| `ANTHROPIC_API_KEY` | No | Anthropic API key (required if `AI_PROVIDER=anthropic`) |
+| `GROQ_API_KEY` | No | Groq API key (required if `AI_PROVIDER=groq`) |
+| `GOOGLE_FONTS_API_KEY` | No | Google Fonts API key (required for font picker) |
 | `POLAR_ACCESS_TOKEN` | Yes | Polar.sh API token |
 | `POLAR_WEBHOOK_SECRET` | Yes | Polar.sh webhook signing secret |
 | `SAASKIT_PRO_PRODUCT_ID` | Yes | Polar product ID — server-only, never expose |
 | `NEXT_PUBLIC_SAASKIT_PRO_PRODUCT_ID` | Yes | Same product ID — client-side for UI display |
-| `KV_REST_API_URL` | Yes | Upstash Redis REST URL (rate limiting) |
-| `KV_REST_API_TOKEN` | Yes | Upstash Redis REST token (rate limiting) |
+| `KV_REST_API_URL` | No | Upstash Redis REST URL (rate limiting, required in production) |
+| `KV_REST_API_TOKEN` | No | Upstash Redis REST token (rate limiting, required in production) |
+| `RESEND_API_KEY` | No | Resend API key (emails skipped if not set) |
+| `EMAIL_FROM` | No | From address for transactional emails |
+| `NEXT_PUBLIC_POSTHOG_KEY` | No | PostHog project API key |
+| `NEXT_PUBLIC_POSTHOG_HOST` | No | PostHog ingest host (default: `https://app.posthog.com`) |
+| `NEXT_PUBLIC_SENTRY_DSN` | No | Sentry DSN for error monitoring |
+| `SENTRY_ORG` | No | Sentry organization slug |
+| `SENTRY_PROJECT` | No | Sentry project slug |
+| `ADMIN_EMAILS` | No | Comma-separated admin email addresses (grants access to `/admin`) |

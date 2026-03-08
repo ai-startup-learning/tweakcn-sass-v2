@@ -51,6 +51,9 @@ const serverEnvSchema = z.object({
   // Error monitoring (Sentry) — optional
   SENTRY_ORG: z.string().optional(),
   SENTRY_PROJECT: z.string().optional(),
+
+  // Admin — comma-separated list of email addresses with admin access
+  ADMIN_EMAILS: z.string().optional(),
 });
 
 const parsed = serverEnvSchema.safeParse(process.env);

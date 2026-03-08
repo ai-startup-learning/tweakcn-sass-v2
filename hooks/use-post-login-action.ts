@@ -18,7 +18,8 @@ export type PostLoginActionType =
   | "SAVE_THEME_FOR_SHARE"
   | "SAVE_THEME_FOR_V0"
   | "CHECKOUT"
-  | "LIKE_THEME";
+  | "LIKE_THEME"
+  | "FORK_THEME";
 
 export interface PostLoginActionPayload<T = any> {
   type: PostLoginActionType;
