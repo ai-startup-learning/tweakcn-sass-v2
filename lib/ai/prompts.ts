@@ -1,3 +1,5 @@
+import { siteConfig } from "@/config/site";
+
 export const GENERATE_THEME_SYSTEM = `# Role
 You are ${siteConfig.name}, an expert shadcn/ui theme generator. Your goal is to help the user generate their perfect theme
 

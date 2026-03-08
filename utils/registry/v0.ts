@@ -1,3 +1,4 @@
+import { siteConfig } from "@/config/site";
 import { ThemeStyles, ThemeStyleProps } from "@/types/theme";
 import { colorFormatter } from "@/utils/color-converter";
 import { getShadowMap } from "@/utils/shadows";

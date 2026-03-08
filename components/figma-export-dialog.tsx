@@ -1,5 +1,6 @@
 "use client";
 
+import { siteConfig } from "@/config/site";
 import FigmaIcon from "@/assets/figma.svg";
 import Logo from "@/assets/logo.svg";
 import Shadcraft from "@/assets/shadcraft.svg";
