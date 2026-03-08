@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { formatCompactNumber } from "@/utils/format";
 import { ChevronRight, Menu, X } from "lucide-react";
 import { motion } from "motion/react";
+import { siteConfig } from "@/config/site";
 import Link from "next/link";
 import { ThemeToggle } from "../theme-toggle";
 
@@ -65,7 +66,7 @@ export function Header({ isScrolled, mobileMenuOpen, setMobileMenuOpen }: Header
         <Link href="/">
           <div className="flex items-center gap-2 font-bold">
             <Logo className="size-6" />
-            <span className="hidden lg:block">SaaS Kit</span>
+            <span className="hidden lg:block">{siteConfig.name}</span>
           </div>
         </Link>
         <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-4 md:flex lg:gap-8">
@@ -92,7 +93,7 @@ export function Header({ isScrolled, mobileMenuOpen, setMobileMenuOpen }: Header
           >
             <Button variant="ghost" asChild>
               <a
-                href="https://github.com/sass-kit-v3/saaskit-v3"
+                href={siteConfig.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-semibold"

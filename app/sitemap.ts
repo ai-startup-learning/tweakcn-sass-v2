@@ -1,7 +1,8 @@
+import { siteConfig } from "@/config/site";
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.BASE_URL ?? "https://sass-kit-v3.com";
+  const baseUrl = process.env.BASE_URL ?? siteConfig.url;
 
   return [
     {

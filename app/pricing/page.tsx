@@ -14,10 +14,11 @@ import { Calendar, Check, Circle, Mail } from "lucide-react";
 import Link from "next/link";
 import { CheckoutButton } from "./components/checkout-button";
 import { Metadata } from "next";
+import { siteConfig } from "@/config/site";
 import { Testimonials } from "@/components/home/testimonials";
 
 export const metadata: Metadata = {
-  title: "Pricing — SaaS Kit",
+  title: `Pricing — ${siteConfig.name}`,
   robots: "index, follow",
 };
 
@@ -148,7 +149,7 @@ export default function PricingPage() {
             </h2>
             <p className="text-muted-foreground mx-auto max-w-2xl text-base text-balance md:text-lg">
               Here&apos;s everything you may want to know. For any other info, just{" "}
-              <Link href="mailto:hello@sass-kit-v3.com" className="text-primary hover:underline">
+              <Link href={`mailto:${siteConfig.email}`} className="text-primary hover:underline">
                 reach us
               </Link>
               .
@@ -176,7 +177,7 @@ export default function PricingPage() {
             <p className="text-muted-foreground text-pretty">
               Need something custom or have questions?
             </p>
-            <Link href="mailto:hello@sass-kit-v3.com">
+            <Link href={`mailto:${siteConfig.email}`}>
               <Button variant="link">
                 <Mail className="size-4" />
                 Get in touch
@@ -195,11 +196,11 @@ const PRICING_FAQS = [
     answer: `You get unlimited AI-generated themes, AI theme generation from images, unlimited saved themes, priority support, and more features coming soon. We're developing new features for Pro users!`,
   },
   {
-    question: "Can I still use SaaS Kit for free?",
-    answer: `Yes! SaaS Kit provides a comprehensive free tier that includes theme customization, access to preset themes, and up to ${AI_REQUEST_FREE_TIER_LIMIT} free AI-generated themes. You can build and export themes without any payment required.`,
+    question: `Can I still use ${siteConfig.name} for free?`,
+    answer: `Yes! ${siteConfig.name} provides a comprehensive free tier that includes theme customization, access to preset themes, and up to ${AI_REQUEST_FREE_TIER_LIMIT} free AI-generated themes. You can build and export themes without any payment required.`,
   },
   {
-    question: "Does SaaS Kit offer a free trial for the Pro plan?",
+    question: `Does ${siteConfig.name} offer a free trial for the Pro plan?`,
     answer: `No, there are no free trials. However, you get access to generate up to ${AI_REQUEST_FREE_TIER_LIMIT} themes with AI, plus unlimited manual theme customization using the free visual editor.`,
   },
   {

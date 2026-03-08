@@ -8,6 +8,7 @@ import { useAIThemeGenerationCore } from "@/hooks/use-ai-theme-generation-core";
 import { usePostLoginAction } from "@/hooks/use-post-login-action";
 import { authClient } from "@/lib/auth-client";
 import { useAuthStore } from "@/store/auth-store";
+import { siteConfig } from "@/config/site";
 import { useEditorStore } from "@/store/editor-store";
 import { useThemePresetStore } from "@/store/theme-preset-store";
 import { parseCssInput } from "@/utils/parse-css-input";
@@ -178,7 +179,7 @@ function useDialogActionsStore(): DialogActionsContextType {
     const currentPreset = presetId ? getPreset(presetId) : undefined;
 
     if (!currentPreset) {
-      setShareUrl(`https://sass-kit-v3.com/editor/theme`);
+      setShareUrl(`${siteConfig.url}/editor/theme`);
       setShareDialogOpen(true);
       return;
     }
@@ -192,8 +193,8 @@ function useDialogActionsStore(): DialogActionsContextType {
     });
 
     const url = isSavedPreset
-      ? `https://sass-kit-v3.com/themes/${id}`
-      : `https://sass-kit-v3.com/editor/theme?theme=${id}`;
+      ? `${siteConfig.url}/themes/${id}`
+      : `${siteConfig.url}/editor/theme?theme=${id}`;
 
     setShareUrl(url);
     setShareDialogOpen(true);
@@ -216,9 +217,9 @@ function useDialogActionsStore(): DialogActionsContextType {
     });
 
     const themeUrl = isSavedPreset
-      ? `https://sass-kit-v3.com/r/v0/${presetId}`
-      : `https://sass-kit-v3.com/r/v0/${presetId}.json`;
-    const title = `"${themeName}" from SaaS Kit`.slice(0, 32);
+      ? `${siteConfig.url}/r/v0/${presetId}`
+      : `${siteConfig.url}/r/v0/${presetId}.json`;
+    const title = `"${themeName}" from ${siteConfig.name}`.slice(0, 32);
     const v0Url = `https://v0.dev/chat/api/open?url=${encodeURIComponent(themeUrl)}&title=${encodeURIComponent(title)}`;
     window.open(v0Url, "_blank", "noopener,noreferrer");
   };

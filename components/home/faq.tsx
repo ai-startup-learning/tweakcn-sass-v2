@@ -1,3 +1,4 @@
+import { siteConfig } from "@/config/site";
 import {
   Accordion,
   AccordionContent,
@@ -8,9 +9,9 @@ import { motion } from "motion/react";
 
 const faqs = [
   {
-    question: "What is SaaS Kit?",
+    question: `What is ${siteConfig.name}?`,
     answer:
-      "SaaS Kit is a visual theme editor for shadcn/ui components. It allows you to customize your theme visually and export the code for your project.",
+      `${siteConfig.name} is a visual theme editor for shadcn/ui components. It allows you to customize your theme visually and export the code for your project.`,
   },
   {
     question: "Is it free?",
@@ -53,7 +54,7 @@ export function FAQ() {
               Got questions? We&apos;ve got answers. If you can&apos;t find what you&apos;re looking for, feel free to reach out.
             </p>
             <div className="text-sm text-muted-foreground">
-              <p>Contact us at <a href="#" className="text-primary underline">hello@sass-kit-v3.com</a></p>
+              <p>Contact us at <a href={`mailto:${siteConfig.email}`} className="text-primary underline">{siteConfig.email}</a></p>
             </div>
           </motion.div>
 

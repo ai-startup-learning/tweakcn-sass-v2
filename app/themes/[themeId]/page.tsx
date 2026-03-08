@@ -1,3 +1,4 @@
+import { siteConfig } from "@/config/site";
 import { getTheme } from "@/actions/themes";
 import { getCommunityDataForTheme } from "@/actions/community-themes";
 import ThemeView from "@/components/theme-view";
@@ -24,17 +25,17 @@ export async function generateMetadata({ params }: ThemePageProps): Promise<Meta
       : `Discover shadcn/ui themes - ${theme?.name} theme`;
 
   return {
-    title: theme?.name + " - SaaS Kit",
+    title: `${theme?.name} - ${siteConfig.name}`,
     description,
     keywords: tags.length > 0 ? tags : undefined,
     openGraph: {
-      title: `${theme?.name} - SaaS Kit`,
+      title: `${theme?.name} - ${siteConfig.name}`,
       description,
       type: "website",
     },
     twitter: {
       card: "summary_large_image",
-      title: `${theme?.name} - SaaS Kit`,
+      title: `${theme?.name} - ${siteConfig.name}`,
       description,
     },
     robots: {

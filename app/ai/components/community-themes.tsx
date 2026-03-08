@@ -1,3 +1,4 @@
+import { siteConfig } from "@/config/site";
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
 import { Suspense } from "react";
@@ -24,7 +25,7 @@ export async function CommunityThemes() {
           </Button>
         </div>
         <p className="text-muted-foreground text-sm">
-          Explore the themes the community is creating with SaaS Kit.
+          Explore the themes the community is creating with {siteConfig.name}.
         </p>
       </div>
 

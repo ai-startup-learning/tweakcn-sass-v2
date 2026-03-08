@@ -51,6 +51,7 @@ import {
   useUnpublishTheme,
   useUpdateCommunityThemeTags,
 } from "@/hooks/themes";
+import { siteConfig } from "@/config/site";
 import Link from "next/link";
 import { toast } from "@/components/ui/use-toast";
 import { ThemePreview } from "@/components/theme-preview";
@@ -97,7 +98,7 @@ export function ThemeCard({
   };
 
   const handleShare = () => {
-    const url = `https://sass-kit-v3.com/themes/${theme.id}`;
+    const url = `${siteConfig.url}/themes/${theme.id}`;
     navigator.clipboard.writeText(url);
     toast({
       title: "Theme URL copied to clipboard!",

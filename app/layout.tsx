@@ -1,3 +1,4 @@
+import { siteConfig } from "@/config/site";
 import { AuthDialogWrapper } from "@/components/auth-dialog-wrapper";
 import { DynamicFontLoader } from "@/components/dynamic-font-loader";
 import { GetProDialogWrapper } from "@/components/get-pro-dialog-wrapper";
@@ -14,35 +15,28 @@ import { Suspense } from "react";
 import "./globals.css";
 import { CookieConsent } from "@/components/cookie-consent";
 
+const title = `${siteConfig.tagline} — ${siteConfig.name} | Theme Editor & Generator`;
+
 export const metadata: Metadata = {
-  title: "Beautiful themes for shadcn/ui — SaaS Kit | Theme Editor & Generator",
-  description:
-    "Customize theme for shadcn/ui with SaaS Kit's interactive editor. Supports Tailwind CSS v4, Shadcn UI, and custom styles. Modify properties, preview changes, and get the code in real time.",
+  title,
+  description: siteConfig.description,
   keywords:
     "theme editor, theme generator, shadcn, ui, components, react, tailwind, button, editor, visual editor, component editor, web development, frontend, design system, UI components, React components, Tailwind CSS, shadcn/ui themes",
-  authors: [{ name: "SaaS Kit v3 Team" }],
+  authors: [{ name: siteConfig.creator }],
   openGraph: {
-    title: "Beautiful themes for shadcn/ui — SaaS Kit | Theme Editor & Generator",
-    description:
-      "Customize theme for shadcn/ui with SaaS Kit's interactive editor. Supports Tailwind CSS v4, Shadcn UI, and custom styles. Modify properties, preview changes, and get the code in real time.",
-    url: "https://sass-kit-v3.com/",
-    siteName: "SaaS Kit",
-    images: [
-      {
-        url: "https://sass-kit-v3.com/og-image.v050725.png",
-        width: 1200,
-        height: 630,
-      },
-    ],
+    title,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    images: [{ url: siteConfig.ogImage, width: 1200, height: 630 }],
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Beautiful themes for shadcn/ui — SaaS Kit | Theme Editor & Generator",
-    description:
-      "Customize theme for shadcn/ui with SaaS Kit's interactive editor. Supports Tailwind CSS v4, Shadcn UI, and custom styles. Modify properties, preview changes, and get the code in real time.",
-    images: ["https://sass-kit-v3.com/og-image.v050725.png"],
+    title,
+    description: siteConfig.description,
+    images: [siteConfig.ogImage],
   },
   robots: "index, follow",
 };

@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { ArrowRight, CheckCircle } from "lucide-react";
+import { siteConfig } from "@/config/site";
 import Link from "next/link";
 
 export default function SuccessPage() {
@@ -31,7 +32,7 @@ export default function SuccessPage() {
           </CardTitle>
           <CardDescription>
             <p className="text-muted-foreground text-center text-base text-pretty md:text-lg">
-              Welcome to <span className="text-foreground font-semibold">SaaS Kit Pro</span>! Your
+              Welcome to <span className="text-foreground font-semibold">{siteConfig.name} {siteConfig.proTier}</span>! Your
               subscription is now active and you have access to all premium features.
             </p>
           </CardDescription>
@@ -57,7 +58,7 @@ export default function SuccessPage() {
           <NoiseEffect />
           <p className="text-muted-foreground w-full text-center text-sm">
             Need help?{" "}
-            <Link href="mailto:hello@sass-kit-v3.com" className="text-primary hover:underline">
+            <Link href={`mailto:${siteConfig.email}`} className="text-primary hover:underline">
               Contact us
             </Link>
           </p>

@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/revola";
 import { useCopyToClipboard } from "@/hooks/use-copy-to-clipboard";
 import { Check, Copy } from "lucide-react";
+import { siteConfig } from "@/config/site";
 import { usePostHog } from "posthog-js/react";
 
 interface MCPDialogProps {
@@ -28,7 +29,7 @@ const mcpConfig = {
       command: "npx",
       args: ["-y", "shadcn@canary", "registry:mcp"],
       env: {
-        REGISTRY_URL: "https://sass-kit-v3.com/r/themes/registry.json",
+        REGISTRY_URL: `${siteConfig.url}/r/themes/registry.json`,
       },
     },
   },

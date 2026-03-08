@@ -61,7 +61,7 @@ export const useIframeThemeInjector = ({
     validationTimeoutRef.current = setTimeout(() => {
       setStatus("missing");
       setThemeInjectionError(
-        "The SaaS Kit's live theme preview script could not be found. Please make sure the script is included in the website's source code and try again."
+        `The ${siteConfig.name}'s live theme preview script could not be found. Please make sure the script is included in the website's source code and try again."
       );
     }, 3000);
   }, [postMessage]);

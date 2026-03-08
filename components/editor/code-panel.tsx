@@ -19,6 +19,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { usePostHog } from "posthog-js/react";
+import { siteConfig } from "@/config/site";
 import { useEditorStore } from "@/store/editor-store";
 import { usePreferencesStore } from "@/store/preferences-store";
 import {
@@ -62,8 +63,8 @@ const CodePanel: React.FC<CodePanelProps> = ({ themeEditorState, themeId }) => {
 
   const getRegistryCommand = (id: string, isSaved: boolean) => {
     const url = isSaved
-      ? `https://sass-kit-v3.com/r/themes/${id}`
-      : `https://sass-kit-v3.com/r/themes/${id}.json`;
+      ? `${siteConfig.url}/r/themes/${id}`
+      : `${siteConfig.url}/r/themes/${id}.json`;
     switch (packageManager) {
       case "pnpm":
         return `pnpm dlx shadcn@latest add ${url}`;

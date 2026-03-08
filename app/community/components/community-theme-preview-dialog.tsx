@@ -104,7 +104,7 @@ export function CommunityThemePreviewDialog({
   };
 
   const handleShare = () => {
-    const url = `https://sass-kit-v3.com/themes/${theme.themeId}`;
+    const url = `${siteConfig.url}/themes/${theme.themeId}`;
     navigator.clipboard.writeText(url);
     toast({
       title: "Theme URL copied to clipboard!",

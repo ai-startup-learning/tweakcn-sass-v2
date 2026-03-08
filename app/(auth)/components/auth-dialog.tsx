@@ -1,5 +1,6 @@
 "use client";
 
+import { siteConfig } from "@/config/site";
 import Github from "@/assets/github.svg";
 import Google from "@/assets/google.svg";
 import { Button } from "@/components/ui/button";
@@ -131,7 +132,7 @@ export function AuthDialog({
               {contextualCopy?.description ??
                 (isSignIn
                   ? "Sign in to your account to continue"
-                  : "Sign up to get started with SaaS Kit")}
+                  : `Sign up to get started with ${siteConfig.name}`)}
             </p>
           </ResponsiveDialogHeader>
 
@@ -169,7 +170,7 @@ export function AuthDialog({
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
                   <span className="bg-background text-muted-foreground px-2">
-                    {isSignIn ? "New to SaaS Kit?" : "Already have an account?"}
+                    {isSignIn ? `New to ${siteConfig.name}?` : "Already have an account?"}
                   </span>
                 </div>
               </div>

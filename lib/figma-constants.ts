@@ -1,3 +1,5 @@
+import { siteConfig } from "@/config/site";
+
 export const FIGMA_CONSTANTS = {
   shadcraftUrl: "https://shadcraft.com?atp=saaskit",
   previewUrl:
@@ -19,7 +21,7 @@ export const FIGMA_CONSTANTS = {
     {
       step: "Step 2",
       title: "Open the plugin",
-      description: "Launch the SaaS Kit Figma plugin",
+      description: `Launch the ${siteConfig.name} Figma plugin`,
     },
     {
       step: "Step 3",

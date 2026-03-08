@@ -1,11 +1,12 @@
+import { siteConfig } from "@/config/site";
 import { getTheme } from "@/actions/themes";
 import Editor from "@/components/editor/editor";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "SaaS Kit — Theme Generator for shadcn/ui",
+  title: `${siteConfig.name} — Theme Generator for shadcn/ui`,
   description:
-    "Easily customize and preview your shadcn/ui theme with SaaS Kit. Modify colors, fonts, and styles in real-time.",
+    `Easily customize and preview your shadcn/ui theme with ${siteConfig.name}. Modify colors, fonts, and styles in real-time.`,
 };
 
 export default async function EditorPage({ params }: { params: Promise<{ themeId: string[] }> }) {

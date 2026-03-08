@@ -1,8 +1,9 @@
+import { siteConfig } from "@/config/site";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | SaaS Kit",
-  description: "Privacy Policy for SaaS Kit.",
+  title: `Privacy Policy | ${siteConfig.name}`,
+  description: `Privacy Policy for ${siteConfig.name}.`,
 };
 
 export default function PrivacyPolicyPage() {
@@ -115,8 +116,8 @@ export default function PrivacyPolicyPage() {
         <h2 className="text-xl font-semibold">8. Contact Us</h2>
         <p className="text-muted-foreground">
           If you have any questions or concerns about this privacy policy, please reach out at{" "}
-          <a href="mailto:hello@sass-kit-v3.com" className="text-primary hover:underline">
-            hello@sass-kit-v3.com
+          <a href={`mailto:${siteConfig.email}`} className="text-primary hover:underline">
+            {siteConfig.email}
           </a>
         </p>
       </section>

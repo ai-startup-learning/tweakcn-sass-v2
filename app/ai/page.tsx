@@ -1,13 +1,14 @@
+import { siteConfig } from "@/config/site";
 import { type Metadata } from "next";
 import { AIAnnouncement } from "./components/ai-announcement";
 import { AIChatHero } from "./components/ai-chat-hero";
 
 export const metadata: Metadata = {
-  title: "Image to shadcn/ui theme. Generate with AI — SaaS Kit",
+  title: `Image to shadcn/ui theme. Generate with AI — ${siteConfig.name}`,
   description:
-    "Transform images into stunning shadcn/ui themes instantly with SaaS Kit's AI theme generator. Upload any image or describe your vision—our AI creates custom Tailwind CSS themes with real-time preview. Perfect for developers who want beautiful, production-ready themes in seconds.",
+    `Transform images into stunning shadcn/ui themes instantly with ${siteConfig.name}'s AI theme generator. Upload any image or describe your vision—our AI creates custom Tailwind CSS themes with real-time preview. Perfect for developers who want beautiful, production-ready themes in seconds.`,
   keywords:
-    "ai theme generator, image to theme, shadcn/ui themes, tailwind css generator, ai design tool, theme from image, ui customization, SaaS Kit, visual theme creator, color palette generator, design system ai, frontend theming, web design automation",
+    `ai theme generator, image to theme, shadcn/ui themes, tailwind css generator, ai design tool, theme from image, ui customization, ${siteConfig.name}, visual theme creator, color palette generator, design system ai, frontend theming, web design automation`,
   robots: "index, follow",
 };
 

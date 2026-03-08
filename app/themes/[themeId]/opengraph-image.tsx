@@ -1,3 +1,4 @@
+import { siteConfig } from "@/config/site";
 import { ImageResponse } from "next/og";
 import { getTheme } from "@/actions/themes";
 
@@ -57,7 +58,7 @@ export default async function Image({
               marginBottom: "10px",
             }}
           >
-            SaaS Kit.com
+            {siteConfig.name}
           </div>
           <div
             style={{

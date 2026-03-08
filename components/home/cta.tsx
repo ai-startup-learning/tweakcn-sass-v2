@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "motion/react";
 import { ArrowRight } from "lucide-react";
+import { siteConfig } from "@/config/site";
 import Link from "next/link";
 
 export function CTA() {
@@ -56,7 +57,7 @@ export function CTA() {
                 <ArrowRight className="ml-2 size-4" />
               </Button>
             </Link>
-            <Link href="https://github.com/sass-kit-v3/saaskit-v3">
+            <Link href={siteConfig.links.github}>
               <Button
                 size="lg"
                 variant="outline"

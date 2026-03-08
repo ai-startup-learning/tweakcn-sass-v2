@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { formatCompactNumber } from "@/utils/format";
 import { Menu, X } from "lucide-react";
 import { motion } from "motion/react";
+import { siteConfig } from "@/config/site";
 import Link from "next/link";
 import { ThemeToggle } from "./theme-toggle";
 
@@ -31,7 +32,7 @@ export function FigmaHeader({ isScrolled, mobileMenuOpen, setMobileMenuOpen }: F
         <Link href="/">
           <div className="flex items-center gap-2 font-bold">
             <Logo className="size-6" />
-            <span className="hidden lg:block">SaaS Kit</span>
+            <span className="hidden lg:block">{siteConfig.name}</span>
           </div>
         </Link>
 
@@ -43,7 +44,7 @@ export function FigmaHeader({ isScrolled, mobileMenuOpen, setMobileMenuOpen }: F
           >
             <Button variant="ghost" asChild>
               <a
-                href="https://github.com/sass-kit-v3/saaskit-v3"
+                href={siteConfig.links.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-semibold"
@@ -93,7 +94,7 @@ export function FigmaHeader({ isScrolled, mobileMenuOpen, setMobileMenuOpen }: F
             >
               <Button variant="ghost" asChild className="w-full justify-start">
                 <a
-                  href="https://github.com/sass-kit-v3/saaskit-v3"
+                  href={siteConfig.links.github}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setMobileMenuOpen(false)}

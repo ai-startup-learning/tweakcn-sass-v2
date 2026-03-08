@@ -27,6 +27,7 @@ import {
   XCircle,
 } from "lucide-react";
 import { usePostHog } from "posthog-js/react";
+import { siteConfig } from "@/config/site";
 import React, { useEffect, useRef } from "react";
 
 /**
@@ -44,7 +45,7 @@ import React, { useEffect, useRef } from "react";
  * external website theming via the embed script.
  */
 
-const SCRIPT_URL = "https://sass-kit-v3.com/live-preview.min.js";
+const SCRIPT_URL = `${siteConfig.url}/live-preview.min.js`;
 
 // Code snippets for quick installation across common setups
 const HTML_SNIPPET = `<!-- Add inside <head> -->\n<script src="${SCRIPT_URL}"></script>`;
@@ -341,7 +342,7 @@ function NoWebsitePreviewLoaded() {
         </div>
 
         <h3 className="text-foreground text-center text-lg font-medium md:text-2xl">
-          Preview your Website in SaaS Kit
+          Preview your Website in {siteConfig.name}
         </h3>
 
         <div className="text-muted-foreground space-y-2 text-left text-sm">

@@ -3,6 +3,7 @@
 import DiscordIcon from "@/assets/discord.svg";
 import FigmaIcon from "@/assets/figma.svg";
 import GitHubIcon from "@/assets/github.svg";
+import { siteConfig } from "@/config/site";
 import Logo from "@/assets/logo.svg";
 import TwitterIcon from "@/assets/twitter.svg";
 import { FigmaExportDialog } from "@/components/figma-export-dialog";
@@ -25,15 +26,15 @@ export function Header() {
       <div className="flex items-center justify-between gap-2 p-4">
         <div className="flex items-center gap-1">
           <Link href="/" className="flex items-center gap-2">
-            <Logo className="size-6" title="SaaS Kit" />
-            <span className="hidden font-bold md:block">SaaS Kit</span>
+            <Logo className="size-6" title={siteConfig.name} />
+            <span className="hidden font-bold md:block">{siteConfig.name}</span>
           </Link>
         </div>
         <div className="flex items-center gap-3.5">
           <GetProCTA className="h-8" />
 
           <SocialLink
-            href="https://github.com/sass-kit-v3/saaskit-v3"
+            href={siteConfig.links.github}
             className="flex items-center gap-2 text-sm font-bold"
           >
             <GitHubIcon className="size-4" />
@@ -42,11 +43,11 @@ export function Header() {
           <Separator orientation="vertical" className="h-8" />
           <div className="flex items-center gap-3.5">
             <div className="hidden items-center gap-3.5 md:flex">
-              <SocialLink href="https://discord.gg/Phs4u2NM3n">
+              <SocialLink href={siteConfig.links.discord}>
                 <DiscordIcon className="size-5" />
               </SocialLink>
             </div>
-            <SocialLink href="https://x.com/iamsahaj_xyz">
+            <SocialLink href={siteConfig.links.twitter}>
               <TwitterIcon className="size-4" />
             </SocialLink>
           </div>

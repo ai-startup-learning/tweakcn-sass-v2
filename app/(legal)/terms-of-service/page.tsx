@@ -1,8 +1,9 @@
+import { siteConfig } from "@/config/site";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms of Service | SaaS Kit",
-  description: "Terms of Service for SaaS Kit.",
+  title: `Terms of Service | ${siteConfig.name}`,
+  description: `Terms of Service for ${siteConfig.name}.`,
 };
 
 export default function TermsOfServicePage() {
@@ -149,8 +150,8 @@ export default function TermsOfServicePage() {
         <h2 className="text-xl font-semibold">13. Contact</h2>
         <p className="text-muted-foreground">
           If you have questions about these Terms of Service, please contact us at{" "}
-          <a href="mailto:hello@sass-kit-v3.com" className="text-primary hover:underline">
-            hello@sass-kit-v3.com
+          <a href={`mailto:${siteConfig.email}`} className="text-primary hover:underline">
+            {siteConfig.email}
           </a>
           .
         </p>

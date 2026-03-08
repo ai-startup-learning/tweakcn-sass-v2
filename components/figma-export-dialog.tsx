@@ -55,7 +55,7 @@ export function FigmaExportDialog({ open, onOpenChange }: FigmaExportDialogProps
             <div className="flex items-center justify-center gap-2">
               <div className="flex items-center gap-2">
                 <Logo className="h-6 w-6" />
-                <div className="text-lg font-bold">SaaS Kit</div>
+                <div className="text-lg font-bold">{siteConfig.name}</div>
               </div>
               <X className="h-4 w-4" />
               <Link href={FIGMA_CONSTANTS.shadcraftUrl} target="_blank">
