@@ -22,8 +22,12 @@ const serverEnvSchema = z.object({
   GOOGLE_CLIENT_ID: z.string().min(1, "GOOGLE_CLIENT_ID is required"),
   GOOGLE_CLIENT_SECRET: z.string().min(1, "GOOGLE_CLIENT_SECRET is required"),
 
-  // AI
-  GOOGLE_API_KEY: z.string().min(1, "GOOGLE_API_KEY is required"),
+  // AI — set AI_PROVIDER to: google | openai | anthropic | groq
+  // Only the key for the selected provider is required (validated at runtime in lib/ai/providers.ts)
+  AI_PROVIDER: z.enum(["google", "openai", "anthropic", "groq"]).default("google"),
+  GOOGLE_API_KEY: z.string().optional(),
+  OPENAI_API_KEY: z.string().optional(),
+  ANTHROPIC_API_KEY: z.string().optional(),
   GROQ_API_KEY: z.string().optional(),
   GOOGLE_FONTS_API_KEY: z.string().optional(),
 
