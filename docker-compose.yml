@@ -13,7 +13,7 @@ services:
       - .:/app
       - /app/node_modules
     command: >
-      sh -c "npx drizzle-kit push && npm run dev"
+      sh -c "pnpm db:push && pnpm dev"
 
   db:
     image: postgres:15
@@ -21,7 +21,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: tweakcn
+      POSTGRES_DB: saaskit
     ports:
       - "5432:5432"
     volumes:

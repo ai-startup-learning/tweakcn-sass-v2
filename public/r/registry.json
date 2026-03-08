@@ -1,7 +1,7 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "tweakcn-theme-registry",
-  "homepage": "http://tweakcn.com",
+  "name": "saaskit-theme-registry",
+  "homepage": "https://sass-kit-v3.com",
   "items": [
     {
       "name": "modern-minimal",

@@ -65,7 +65,7 @@ function loadGoogleFont(family, weights) {
 
 function overrideFontClasses(root, fonts) {
   const doc = root.ownerDocument || document;
-  const styleId = "tweakcn-font-overrides";
+  const styleId = "saaskit-font-overrides";
   let styleElement = doc.getElementById(styleId);
   
   // Create style element if it doesn't exist
@@ -149,7 +149,7 @@ function overrideShadowClass(root, themeStyles, mode) {
   };
 
   const doc = root.ownerDocument || document;
-  const styleId = "tweakcn-shadow-overrides";
+  const styleId = "saaskit-shadow-overrides";
   let styleElement = doc.getElementById(styleId);
   
   // Create style element if it doesn't exist
@@ -261,7 +261,7 @@ const SAASKIT_MESSAGE = {
   "use strict";
   
   // Prevent multiple initialization
-  if (window.tweakcnEmbed) return; 
+  if (window.saaskitEmbed) return;
 
   const handleMessage = (event) => {
     // Verify the message is from the parent window
@@ -270,9 +270,9 @@ const SAASKIT_MESSAGE = {
     if (!event.data || typeof event.data.type !== "string") return;
 
     // TODO: Remove localhost once this is live
-    const ALLOWED_ORIGINS = ['https://tweakcn.com', 'http://localhost:3000'];
+    const ALLOWED_ORIGINS = ['https://sass-kit-v3.com', 'http://localhost:3000'];
     if (!ALLOWED_ORIGINS.includes(event.origin)){
-      sendMessageToParent({ type: SAASKIT_MESSAGE.EMBED_ERROR, payload: { error: "Origin not allowed. Preview failed to establish the connection with tweakcn." } });
+      sendMessageToParent({ type: SAASKIT_MESSAGE.EMBED_ERROR, payload: { error: "Origin not allowed. Preview failed to establish the connection with SaaS Kit." } });
       return;
     } ;    
     
@@ -339,12 +339,12 @@ const SAASKIT_MESSAGE = {
   window.addEventListener("popstate", emitNavigationUpdate);
   window.addEventListener("hashchange", emitNavigationUpdate);
 
-  window.tweakcnEmbed = {
+  window.saaskitEmbed = {
     initialized: true,
     version: "1.0.0",
     destroy: () => {
       window.removeEventListener("message", handleMessage);
-      delete window.tweakcnEmbed;
+      delete window.saaskitEmbed;
     },
   };
 
